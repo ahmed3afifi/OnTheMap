@@ -23,47 +23,65 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         emailTextField.borderStyle = .roundedRect
         passwordTextField.borderStyle = .roundedRect
         loginButton.layer.cornerRadius = 5
+    
+    }
+    
+    
+    func login(_ email: String,_ password: String, completion: @escaping (Bool, Error?)->()) {
+        var request = URLRequest(url: URL(string: "https://onthemap-api.udacity.com/v1/session")!)
+        request.httpMethod = "POST"
+        request.addValue("application/json", forHTTPHeaderField: "Accept")
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = "{\"udacity\": {\"username\": \"\(email)\", \"password\": \"\(password)\"}}".data(using: .utf8)
         
-        subscribeToNotification(UIResponder.keyboardWillShowNotification, selector: #selector(keyboardWillShow))
-        subscribeToNotification(UIResponder.keyboardWillHideNotification, selector: #selector(keyboardWillHide))
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        unsubscribeFromAllNotifications()
-    }
-    
-    func subscribeToNotification(_ notification: NSNotification.Name, selector: Selector) {
-        NotificationCenter.default.addObserver(self, selector: selector, name: notification, object: nil)
-    }
-    
-    func unsubscribeFromAllNotifications() {
-        NotificationCenter.default.removeObserver(self)
-    }
-    
-    // MARK: Show/Hide Keyboard
-    
-    @objc func keyboardWillShow(_ notification: Notification) {
-        if keyboardHeight(notification) > 400 {
-            view.frame.origin.y = -keyboardHeight(notification)
+        let task = URLSession.shared.dataTask(with: request as URLRequest) { data, response, error in
+            
+            func dispalyError(_ error: String){
+                print(error)
+            }
+            
+            guard (error == nil) else {
+                completion (false, error)
+                return
+            }
+            
+            guard let data = data else {
+                dispalyError("there is no data")
+                return
+            }
+            guard let status = (response as? HTTPURLResponse)?.statusCode, status >= 200 && status <= 399 else {
+                dispalyError("the status code > 2xx")
+                completion (false, error)
+                return
+            }
+            let range = 5..<data.count
+            let newData = data.subdata(in: range) /* subset response data! */
+            
+            do {
+                let decoder = JSONDecoder()
+                let dataDecoded = try decoder.decode(loginResponse.self, from: newData)
+                let accountID = dataDecoded.account.key
+                let accountRegister = dataDecoded.account.registered
+                let sessionID = dataDecoded.session.id
+                let sessionExpire = dataDecoded.session.expiration
+                //self.firstName = dataDecoded.account
+                print(":: Authentication Information ::")
+                print("--------------------------")
+                print("The account ID: \(String(describing: accountID!))")
+                print("The account registered: \(String(describing: accountRegister!))")
+                print("The session ID: \(String(describing: sessionID!))")
+                print("The seesion expire: \(String(describing: sessionExpire!))")
+                print("--------------------------\n")
+                completion (true, nil)
+                print("The login is done successfuly!")
+            } catch let error {
+                dispalyError("could not decode data \(error.localizedDescription)")
+                completion (false, nil)
+                return
+            }
         }
+        task.resume()
     }
     
-    @objc func keyboardWillHide(_ notification: Notification) {
-        view.frame.origin.y = 0
-    }
-    
-    func keyboardHeight(_ notification: Notification) -> CGFloat {
-        let userInfo = (notification as NSNotification).userInfo
-        let keyboardSize = userInfo![UIResponder.keyboardFrameEndUserInfoKey] as! NSValue
-        return keyboardSize.cgRectValue.height
-    }
-    
-    func resignIfFirstResponder(_ textField: UITextField) {
-        if textField.isFirstResponder {
-            textField.resignFirstResponder()
-        }
-    }
-
 }
 
