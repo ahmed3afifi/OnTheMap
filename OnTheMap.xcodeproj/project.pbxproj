@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7609BFE222E20EAB00287545 /* StudentsLocations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7609BFE122E20EAB00287545 /* StudentsLocations.swift */; };
 		76C2F07122DFFFF300AE9F2C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76C2F07022DFFFF300AE9F2C /* AppDelegate.swift */; };
 		76C2F07322DFFFF300AE9F2C /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76C2F07222DFFFF300AE9F2C /* LoginViewController.swift */; };
 		76C2F07622DFFFF300AE9F2C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 76C2F07422DFFFF300AE9F2C /* Main.storyboard */; };
@@ -17,6 +18,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7609BFE122E20EAB00287545 /* StudentsLocations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentsLocations.swift; sourceTree = "<group>"; };
 		76C2F06D22DFFFF300AE9F2C /* OnTheMap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OnTheMap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		76C2F07022DFFFF300AE9F2C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		76C2F07222DFFFF300AE9F2C /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -75,6 +77,7 @@
 			children = (
 				76C2F08522E12B1000AE9F2C /* Authentication.swift */,
 				76C2F08722E138B600AE9F2C /* API.swift */,
+				7609BFE122E20EAB00287545 /* StudentsLocations.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -167,6 +170,7 @@
 			files = (
 				76C2F07322DFFFF300AE9F2C /* LoginViewController.swift in Sources */,
 				76C2F07122DFFFF300AE9F2C /* AppDelegate.swift in Sources */,
+				7609BFE222E20EAB00287545 /* StudentsLocations.swift in Sources */,
 				76C2F08822E138B600AE9F2C /* API.swift in Sources */,
 				76C2F08622E12B1000AE9F2C /* Authentication.swift in Sources */,
 			);

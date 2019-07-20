@@ -23,7 +23,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         emailTextField.borderStyle = .roundedRect
         passwordTextField.borderStyle = .roundedRect
         loginButton.layer.cornerRadius = 5
-    
     }
     
     
@@ -79,6 +78,49 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                 completion (false, nil)
                 return
             }
+        }
+        task.resume()
+    }
+    
+    // MARK: Logout Func
+    
+    func logout() {
+        var request = URLRequest(url: URL(string: "https://onthemap-api.udacity.com/v1/session")!)
+        request.httpMethod = "DELETE"
+        var xsrfCookie: HTTPCookie? = nil
+        let sharedCookieStorage = HTTPCookieStorage.shared
+        for cookie in sharedCookieStorage.cookies! {
+            if cookie.name == "XSRF-TOKEN" { xsrfCookie = cookie }
+        }
+        if let xsrfCookie = xsrfCookie {
+            request.setValue(xsrfCookie.value, forHTTPHeaderField: "X-XSRF-TOKEN")
+        }
+        let session = URLSession.shared
+        let task = session.dataTask(with: request) { data, response, error in
+            func dispalyError(_ error: String){
+                print(error)
+            }
+            guard (error == nil) else {
+                return
+            }
+            guard let data = data else {
+                dispalyError("there is no data")
+                return
+            }
+            guard let status = (response as? HTTPURLResponse)?.statusCode, status >= 200 && status <= 399 else {
+                dispalyError("the status code > 2xx")
+                return
+            }
+            let range = 5..<data.count
+            let newData = data.subdata(in: range) /* subset response data! */
+            do {
+                let decoder = JSONDecoder()
+                _ = try decoder.decode(Session.self, from: newData)
+            }catch let error {
+                dispalyError(error.localizedDescription)
+                return
+            }
+            print(String(data: newData, encoding: .utf8)!)
         }
         task.resume()
     }
