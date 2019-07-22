@@ -23,108 +23,106 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         emailTextField.borderStyle = .roundedRect
         passwordTextField.borderStyle = .roundedRect
         loginButton.layer.cornerRadius = 5
+        subscribeToNotification(UIResponder.keyboardWillShowNotification, selector: #selector(keyboardWillShow))
+        subscribeToNotification(UIResponder.keyboardWillHideNotification, selector: #selector(keyboardWillHide))
+        
     }
     
-    
-    func loginRequest(_ email: String,_ password: String, completion: @escaping (Bool, Error?)->()) {
-        
-        var request = URLRequest(url: URL(string: "https://onthemap-api.udacity.com/v1/session")!)
-        request.httpMethod = "POST"
-        request.addValue("application/json", forHTTPHeaderField: "Accept")
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.httpBody = "{\"udacity\": {\"username\": \"\(email)\", \"password\": \"\(password)\"}}".data(using: .utf8)
-        
-        let task = URLSession.shared.dataTask(with: request as URLRequest) { data, response, error in
-            
-            func dispalyError(_ error: String){
-                print(error)
-            }
-            
-            guard (error == nil) else {
-                completion (false, error)
-                return
-            }
-            
-            guard let data = data else {
-                dispalyError("there is no data")
-                return
-            }
-            guard let status = (response as? HTTPURLResponse)?.statusCode, status >= 200 && status <= 399 else {
-                dispalyError("the status code > 2xx")
-                completion (false, error)
-                return
-            }
-            let range = 5..<data.count
-            let newData = data.subdata(in: range) /* subset response data! */
-            
-            do {
-                let decoder = JSONDecoder()
-                let dataDecoded = try decoder.decode(loginResponse.self, from: newData)
-                let accountID = dataDecoded.account.key
-                let accountRegister = dataDecoded.account.registered
-                let sessionID = dataDecoded.session.id
-                let sessionExpire = dataDecoded.session.expiration
-                //self.firstName = dataDecoded.account
-                print(":: Authentication Information ::")
-                print("--------------------------")
-                print("The account ID: \(String(describing: accountID!))")
-                print("The account registered: \(String(describing: accountRegister!))")
-                print("The session ID: \(String(describing: sessionID!))")
-                print("The seesion expire: \(String(describing: sessionExpire!))")
-                print("--------------------------\n")
-                completion (true, nil)
-                print("The login is done successfuly!")
-            } catch let error {
-                dispalyError("could not decode data \(error.localizedDescription)")
-                completion (false, nil)
-                return
-            }
-        }
-        task.resume()
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        unsubscribeFromAllNotifications()
     }
     
-    // MARK: Logout Func
+    /*@objc private func addLocation(_ sender: Any){
+        let navController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "AddLocationNavigationController") as! UINavigationController
+        present(navController, animated: true, completion: nil)
+    } */
     
-    func logoutRequest() {
+    private func fieldsChecker(){
+        if (emailTextField.text?.isEmpty)! || (passwordTextField.text?.isEmpty)!  {
+            let alert = UIAlertController(title: "Fill the auth info", message: "Please fill both email and password", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {_ in
+                return
+            }))
+            self.present(alert, animated: true, completion: nil)
+        }
+    }
+    
+    @IBAction func loginTapped(_ sender: Any) {
         
-        var request = URLRequest(url: URL(string: "https://onthemap-api.udacity.com/v1/session")!)
-        request.httpMethod = "DELETE"
-        var xsrfCookie: HTTPCookie? = nil
-        let sharedCookieStorage = HTTPCookieStorage.shared
-        for cookie in sharedCookieStorage.cookies! {
-            if cookie.name == "XSRF-TOKEN" { xsrfCookie = cookie }
+        fieldsChecker()
+        API.shared.loginRequest(emailTextField.text!, passwordTextField.text!) {(successful, error) in
+            DispatchQueue.main.async {
+                // for any error not expeceted
+                if let error = error {
+                    print(error.localizedDescription)
+                    let errorAlert = UIAlertController(title: "Error", message: "There is error", preferredStyle: .alert)
+                    errorAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: {_ in
+                        return
+                    }))
+                    self.present(errorAlert, animated: true, completion: nil)
+                }
+                
+                // for invalid email or password
+                if !successful {
+                    let invalidAccessAlert = UIAlertController(title: "Invalid Access", message: "Invalid email or password", preferredStyle: .alert)
+                    invalidAccessAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: {_ in
+                        return
+                    }))
+                    self.present(invalidAccessAlert, animated: true, completion: nil)
+                } else {
+                    
+                    // move to next storyboard
+                    let mapVC = self.storyboard?.instantiateViewController(withIdentifier: "TabBarController") as! UITabBarController
+                    
+                    //self.navigationController!.pushViewController(mapVC, animated: true)
+                    self.present(mapVC, animated: true, completion: nil)
+                }
+            }
         }
-        if let xsrfCookie = xsrfCookie {
-            request.setValue(xsrfCookie.value, forHTTPHeaderField: "X-XSRF-TOKEN")
+    }
+    
+    @IBAction func signUpButton(_ sender: Any) {
+        guard let url = URL(string: "https://www.udacity.com/account/auth#!/signup") else {
+            return
         }
-        let session = URLSession.shared
-        let task = session.dataTask(with: request) { data, response, error in
-            func dispalyError(_ error: String){
-                print(error)
-            }
-            guard (error == nil) else {
-                return
-            }
-            guard let data = data else {
-                dispalyError("there is no data")
-                return
-            }
-            guard let status = (response as? HTTPURLResponse)?.statusCode, status >= 200 && status <= 399 else {
-                dispalyError("the status code > 2xx")
-                return
-            }
-            let range = 5..<data.count
-            let newData = data.subdata(in: range) /* subset response data! */
-            do {
-                let decoder = JSONDecoder()
-                _ = try decoder.decode(Session.self, from: newData)
-            }catch let error {
-                dispalyError(error.localizedDescription)
-                return
-            }
-            print(String(data: newData, encoding: .utf8)!)
+        UIApplication.shared.open(url, options: [:], completionHandler: nil)
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.endEditing(true)
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    func keyboardHeight(_ notification: Notification) -> CGFloat {
+        let userInfo = (notification as NSNotification).userInfo
+        let keyboardSize = userInfo![UIResponder.keyboardFrameEndUserInfoKey] as! NSValue
+        return keyboardSize.cgRectValue.height
+    }
+    
+    @objc func keyboardWillShow(_ notification: Notification) {
+        if keyboardHeight(notification) > 400 {
+            view.frame.origin.y = -keyboardHeight(notification)
         }
-        task.resume()
+    }
+    
+    @objc func keyboardWillHide(_ notification: Notification) {
+        view.frame.origin.y = 0
+    }
+    
+    func resignIfFirstResponder(_ textField: UITextField) {
+        if textField.isFirstResponder {
+            textField.resignFirstResponder()
+        }
+    }
+    
+    func subscribeToNotification(_ notification: NSNotification.Name, selector: Selector) {
+        NotificationCenter.default.addObserver(self, selector: selector, name: notification, object: nil)
+    }
+    
+    func unsubscribeFromAllNotifications() {
+        NotificationCenter.default.removeObserver(self)
     }
     
 }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="zR7-cV-v5X">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="k8F-gK-nMR">
     <device id="retina6_1" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -44,7 +44,7 @@
                                                         <rect key="frame" x="0.0" y="56" width="270" height="48"/>
                                                         <nil key="textColor"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                        <textInputTraits key="textInputTraits"/>
+                                                        <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                                                     </textField>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uug-r0-ttd">
                                                         <rect key="frame" x="0.0" y="112" width="270" height="48"/>
@@ -55,6 +55,7 @@
                                                         </state>
                                                         <connections>
                                                             <action selector="loginPressed:" destination="k8F-gK-nMR" eventType="touchUpInside" id="yWv-4W-kcO"/>
+                                                            <action selector="loginTapped:" destination="k8F-gK-nMR" eventType="touchUpInside" id="QP4-Nw-fbd"/>
                                                         </connections>
                                                     </button>
                                                 </subviews>
@@ -76,6 +77,9 @@
                                                         <rect key="frame" x="187" y="0.0" width="58" height="33"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <state key="normal" title="Sign up"/>
+                                                        <connections>
+                                                            <action selector="signUpButton:" destination="k8F-gK-nMR" eventType="touchUpInside" id="lda-Gl-kVP"/>
+                                                        </connections>
                                                     </button>
                                                 </subviews>
                                                 <constraints>
@@ -216,7 +220,7 @@
         <!--Map-->
         <scene sceneID="Xw5-gC-cgx">
             <objects>
-                <viewController id="sKV-gt-e4L" userLabel="Map" customClass="StudentsMapViewController" customModule="OnTheMap" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MapViewController" id="sKV-gt-e4L" userLabel="Map" customClass="StudentsMapViewController" customModule="OnTheMap" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="jgT-39-7li">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -329,19 +333,19 @@
                         <barButtonItem key="leftBarButtonItem" title="CANCEL" id="EiB-tg-dUM"/>
                     </navigationItem>
                     <connections>
-                        <outlet property="MediaURL" destination="6sN-Kh-vhK" id="aK7-2b-34d"/>
                         <outlet property="findLocationButton" destination="4Li-6Z-XCj" id="FwE-o0-llf"/>
                         <outlet property="locationName" destination="sGB-4b-C5n" id="HdC-mg-OOF"/>
+                        <outlet property="mediaURL" destination="6sN-Kh-vhK" id="aK7-2b-34d"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GEX-00-i6h" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="5583" y="238"/>
         </scene>
-        <!--View Controller-->
+        <!--Maps LocationVC-->
         <scene sceneID="aoe-ra-2iS">
             <objects>
-                <viewController id="GEN-L4-ddF" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="mapsLocation" id="GEN-L4-ddF" customClass="mapsLocationVC" customModule="OnTheMap" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="qFI-Df-GoZ">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -375,6 +379,9 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="wb1-UY-CNa"/>
                     </view>
+                    <connections>
+                        <outlet property="mapView" destination="WPD-P9-DsO" id="QaA-UV-b43"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="D1Z-1N-Ri4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -383,7 +390,7 @@
         <!--Tab Bar Controller-->
         <scene sceneID="IIb-hI-jth">
             <objects>
-                <tabBarController id="lqz-nt-dTs" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="TabBarController" id="lqz-nt-dTs" sceneMemberID="viewController">
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Of5-ZJ-rtB">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>

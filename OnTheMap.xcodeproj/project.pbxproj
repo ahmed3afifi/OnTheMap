@@ -10,6 +10,8 @@
 		7609BFE222E20EAB00287545 /* StudentsLocations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7609BFE122E20EAB00287545 /* StudentsLocations.swift */; };
 		7609BFE422E3C9C400287545 /* StudentsMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7609BFE322E3C9C400287545 /* StudentsMapViewController.swift */; };
 		7609BFE722E3D57F00287545 /* StudentsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7609BFE622E3D57F00287545 /* StudentsTableViewController.swift */; };
+		761CEC1C22E66435003CC0CF /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761CEC1B22E66435003CC0CF /* ActivityIndicator.swift */; };
+		761CEC1E22E66DA3003CC0CF /* mapsLocationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761CEC1D22E66DA3003CC0CF /* mapsLocationVC.swift */; };
 		76BADEE722E5345A0011C0AD /* addLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76BADEE622E5345A0011C0AD /* addLocationViewController.swift */; };
 		76BADEE922E53B000011C0AD /* DataViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76BADEE822E53B000011C0AD /* DataViewCell.swift */; };
 		76C2F07122DFFFF300AE9F2C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76C2F07022DFFFF300AE9F2C /* AppDelegate.swift */; };
@@ -25,6 +27,8 @@
 		7609BFE122E20EAB00287545 /* StudentsLocations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentsLocations.swift; sourceTree = "<group>"; };
 		7609BFE322E3C9C400287545 /* StudentsMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentsMapViewController.swift; sourceTree = "<group>"; };
 		7609BFE622E3D57F00287545 /* StudentsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentsTableViewController.swift; sourceTree = "<group>"; };
+		761CEC1B22E66435003CC0CF /* ActivityIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicator.swift; sourceTree = "<group>"; };
+		761CEC1D22E66DA3003CC0CF /* mapsLocationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = mapsLocationVC.swift; sourceTree = "<group>"; };
 		76BADEE622E5345A0011C0AD /* addLocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = addLocationViewController.swift; sourceTree = "<group>"; };
 		76BADEE822E53B000011C0AD /* DataViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataViewCell.swift; sourceTree = "<group>"; };
 		76C2F06D22DFFFF300AE9F2C /* OnTheMap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OnTheMap.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -86,6 +90,7 @@
 				76C2F08522E12B1000AE9F2C /* Authentication.swift */,
 				76C2F08722E138B600AE9F2C /* API.swift */,
 				7609BFE122E20EAB00287545 /* StudentsLocations.swift */,
+				761CEC1B22E66435003CC0CF /* ActivityIndicator.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -101,10 +106,11 @@
 			isa = PBXGroup;
 			children = (
 				76C2F07222DFFFF300AE9F2C /* LoginViewController.swift */,
+				7609BFE322E3C9C400287545 /* StudentsMapViewController.swift */,
 				7609BFE622E3D57F00287545 /* StudentsTableViewController.swift */,
 				76BADEE822E53B000011C0AD /* DataViewCell.swift */,
-				7609BFE322E3C9C400287545 /* StudentsMapViewController.swift */,
 				76BADEE622E5345A0011C0AD /* addLocationViewController.swift */,
+				761CEC1D22E66DA3003CC0CF /* mapsLocationVC.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -183,9 +189,11 @@
 				76C2F07322DFFFF300AE9F2C /* LoginViewController.swift in Sources */,
 				7609BFE422E3C9C400287545 /* StudentsMapViewController.swift in Sources */,
 				76BADEE922E53B000011C0AD /* DataViewCell.swift in Sources */,
+				761CEC1E22E66DA3003CC0CF /* mapsLocationVC.swift in Sources */,
 				76C2F07122DFFFF300AE9F2C /* AppDelegate.swift in Sources */,
 				76BADEE722E5345A0011C0AD /* addLocationViewController.swift in Sources */,
 				7609BFE222E20EAB00287545 /* StudentsLocations.swift in Sources */,
+				761CEC1C22E66435003CC0CF /* ActivityIndicator.swift in Sources */,
 				76C2F08822E138B600AE9F2C /* API.swift in Sources */,
 				7609BFE722E3D57F00287545 /* StudentsTableViewController.swift in Sources */,
 				76C2F08622E12B1000AE9F2C /* Authentication.swift in Sources */,
