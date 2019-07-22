@@ -26,7 +26,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     }
     
     
-    func login(_ email: String,_ password: String, completion: @escaping (Bool, Error?)->()) {
+    func loginRequest(_ email: String,_ password: String, completion: @escaping (Bool, Error?)->()) {
+        
         var request = URLRequest(url: URL(string: "https://onthemap-api.udacity.com/v1/session")!)
         request.httpMethod = "POST"
         request.addValue("application/json", forHTTPHeaderField: "Accept")
@@ -84,7 +85,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
     // MARK: Logout Func
     
-    func logout() {
+    func logoutRequest() {
+        
         var request = URLRequest(url: URL(string: "https://onthemap-api.udacity.com/v1/session")!)
         request.httpMethod = "DELETE"
         var xsrfCookie: HTTPCookie? = nil

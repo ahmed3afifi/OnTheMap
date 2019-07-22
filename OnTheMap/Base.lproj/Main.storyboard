@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="k8F-gK-nMR">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="zR7-cV-v5X">
     <device id="retina6_1" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -113,10 +113,10 @@
             </objects>
             <point key="canvasLocation" x="866.66666666666674" y="210.9375"/>
         </scene>
-        <!--On The Map-->
+        <!--Students Table View Controller-->
         <scene sceneID="IJE-vT-NtA">
             <objects>
-                <viewController id="pI4-bf-Ege" sceneMemberID="viewController">
+                <viewController id="pI4-bf-Ege" userLabel="Students Table View Controller" customClass="StudentsTableViewController" customModule="OnTheMap" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="JyK-Vu-AcG">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -125,7 +125,7 @@
                                 <rect key="frame" x="0.0" y="88" width="414" height="725"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="81" id="Q7l-dR-cDg">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="DataCell" rowHeight="81" id="Q7l-dR-cDg" customClass="DataViewCell" customModule="OnTheMap" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="414" height="81"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Q7l-dR-cDg" id="1oh-g2-lnA">
@@ -135,7 +135,7 @@
                                                 <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="d5j-SD-yd6">
                                                     <rect key="frame" x="20" y="17" width="116.5" height="47"/>
                                                     <subviews>
-                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_pin" translatesAutoresizingMaskIntoConstraints="NO" id="Fmk-cx-MiQ">
+                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_pin" translatesAutoresizingMaskIntoConstraints="NO" id="Fmk-cx-MiQ" userLabel="Image View">
                                                             <rect key="frame" x="0.0" y="0.0" width="47" height="47"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="47" id="5fb-cb-iFm"/>
@@ -168,6 +168,11 @@
                                                 <constraint firstItem="d5j-SD-yd6" firstAttribute="top" secondItem="1oh-g2-lnA" secondAttribute="topMargin" constant="6" id="xSD-lj-8Jl"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="mediaURL" destination="lFh-r0-7Vb" id="3Cm-39-WhP"/>
+                                            <outlet property="name" destination="SiB-Pf-VdA" id="chS-FT-uPd"/>
+                                            <outlet property="pinImage" destination="Fmk-cx-MiQ" id="zfy-PK-TfM"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
@@ -184,19 +189,30 @@
                     <navigationItem key="navigationItem" title="On The Map" id="Ner-OJ-KoH">
                         <barButtonItem key="leftBarButtonItem" title="LOGOUT" id="2hZ-j7-zwN"/>
                         <rightBarButtonItems>
-                            <barButtonItem image="icon_addpin" id="XJd-ZV-s46"/>
-                            <barButtonItem image="icon_refresh" id="EGs-HW-7rw"/>
+                            <barButtonItem image="icon_addpin" id="XJd-ZV-s46">
+                                <connections>
+                                    <action selector="addLocationPressed:" destination="pI4-bf-Ege" id="Gw8-Li-coe"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem image="icon_refresh" id="EGs-HW-7rw">
+                                <connections>
+                                    <action selector="refreshPressed:" destination="pI4-bf-Ege" id="grc-zl-6Kj"/>
+                                </connections>
+                            </barButtonItem>
                         </rightBarButtonItems>
                     </navigationItem>
+                    <connections>
+                        <outlet property="studentsTableview" destination="e2n-3g-bjj" id="dbv-f2-0zh"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Y4A-vv-Rld" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3600.0000000000005" y="534.375"/>
         </scene>
-        <!--On The Map-->
+        <!--Map-->
         <scene sceneID="Xw5-gC-cgx">
             <objects>
-                <viewController id="sKV-gt-e4L" sceneMemberID="viewController">
+                <viewController id="sKV-gt-e4L" userLabel="Map" customClass="MapViewController" customModule="OnTheMap" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="jgT-39-7li">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -229,7 +245,7 @@
         <!--Add Location-->
         <scene sceneID="U7Y-wy-FMe">
             <objects>
-                <viewController id="ozh-OJ-uSO" sceneMemberID="viewController">
+                <viewController id="ozh-OJ-uSO" customClass="addLocationViewController" customModule="OnTheMap" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="3Wz-eJ-6xq">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -293,6 +309,11 @@
                     <navigationItem key="navigationItem" title="Add Location" id="L4k-yQ-ppc">
                         <barButtonItem key="leftBarButtonItem" title="CANCEL" id="EiB-tg-dUM"/>
                     </navigationItem>
+                    <connections>
+                        <outlet property="MediaURL" destination="6sN-Kh-vhK" id="aK7-2b-34d"/>
+                        <outlet property="findLocationButton" destination="4Li-6Z-XCj" id="FwE-o0-llf"/>
+                        <outlet property="locationName" destination="sGB-4b-C5n" id="HdC-mg-OOF"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GEX-00-i6h" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -399,7 +420,7 @@
         <!--Navigation Controller-->
         <scene sceneID="oua-5r-xMt">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="nuc-wI-YIR" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="AddLocationNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="nuc-wI-YIR" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="dU3-fq-Mnp">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>

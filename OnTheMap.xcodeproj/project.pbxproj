@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		7609BFE222E20EAB00287545 /* StudentsLocations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7609BFE122E20EAB00287545 /* StudentsLocations.swift */; };
+		7609BFE422E3C9C400287545 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7609BFE322E3C9C400287545 /* MapViewController.swift */; };
+		7609BFE722E3D57F00287545 /* StudentsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7609BFE622E3D57F00287545 /* StudentsTableViewController.swift */; };
+		76BADEE722E5345A0011C0AD /* addLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76BADEE622E5345A0011C0AD /* addLocationViewController.swift */; };
+		76BADEE922E53B000011C0AD /* DataViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76BADEE822E53B000011C0AD /* DataViewCell.swift */; };
 		76C2F07122DFFFF300AE9F2C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76C2F07022DFFFF300AE9F2C /* AppDelegate.swift */; };
 		76C2F07322DFFFF300AE9F2C /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76C2F07222DFFFF300AE9F2C /* LoginViewController.swift */; };
 		76C2F07622DFFFF300AE9F2C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 76C2F07422DFFFF300AE9F2C /* Main.storyboard */; };
@@ -19,6 +23,10 @@
 
 /* Begin PBXFileReference section */
 		7609BFE122E20EAB00287545 /* StudentsLocations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentsLocations.swift; sourceTree = "<group>"; };
+		7609BFE322E3C9C400287545 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		7609BFE622E3D57F00287545 /* StudentsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentsTableViewController.swift; sourceTree = "<group>"; };
+		76BADEE622E5345A0011C0AD /* addLocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = addLocationViewController.swift; sourceTree = "<group>"; };
+		76BADEE822E53B000011C0AD /* DataViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataViewCell.swift; sourceTree = "<group>"; };
 		76C2F06D22DFFFF300AE9F2C /* OnTheMap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OnTheMap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		76C2F07022DFFFF300AE9F2C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		76C2F07222DFFFF300AE9F2C /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -93,6 +101,10 @@
 			isa = PBXGroup;
 			children = (
 				76C2F07222DFFFF300AE9F2C /* LoginViewController.swift */,
+				7609BFE622E3D57F00287545 /* StudentsTableViewController.swift */,
+				76BADEE822E53B000011C0AD /* DataViewCell.swift */,
+				7609BFE322E3C9C400287545 /* MapViewController.swift */,
+				76BADEE622E5345A0011C0AD /* addLocationViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -169,9 +181,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				76C2F07322DFFFF300AE9F2C /* LoginViewController.swift in Sources */,
+				7609BFE422E3C9C400287545 /* MapViewController.swift in Sources */,
+				76BADEE922E53B000011C0AD /* DataViewCell.swift in Sources */,
 				76C2F07122DFFFF300AE9F2C /* AppDelegate.swift in Sources */,
+				76BADEE722E5345A0011C0AD /* addLocationViewController.swift in Sources */,
 				7609BFE222E20EAB00287545 /* StudentsLocations.swift in Sources */,
 				76C2F08822E138B600AE9F2C /* API.swift in Sources */,
+				7609BFE722E3D57F00287545 /* StudentsTableViewController.swift in Sources */,
 				76C2F08622E12B1000AE9F2C /* Authentication.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
