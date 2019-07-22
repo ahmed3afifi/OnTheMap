@@ -16,8 +16,8 @@ class StudentsTableViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //studentsTableview.delegate = self
-        //studentsTableview.dataSource = self
+        studentsTableview.delegate = self
+        studentsTableview.dataSource = self
     }
     
     @IBAction func addLocationPressed(_ sender: Any) {
@@ -36,6 +36,11 @@ class StudentsTableViewController: UIViewController {
             self.result = result
         }
     }
+    
+    @IBAction func logout(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
     
 }
     

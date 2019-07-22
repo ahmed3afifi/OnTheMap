@@ -187,7 +187,11 @@
                         <viewLayoutGuide key="safeArea" id="Y90-bP-wiz"/>
                     </view>
                     <navigationItem key="navigationItem" title="On The Map" id="Ner-OJ-KoH">
-                        <barButtonItem key="leftBarButtonItem" title="LOGOUT" id="2hZ-j7-zwN"/>
+                        <barButtonItem key="leftBarButtonItem" title="LOGOUT" id="2hZ-j7-zwN">
+                            <connections>
+                                <action selector="logout:" destination="pI4-bf-Ege" id="WfR-JC-g6d"/>
+                            </connections>
+                        </barButtonItem>
                         <rightBarButtonItems>
                             <barButtonItem image="icon_addpin" id="XJd-ZV-s46">
                                 <connections>
@@ -212,7 +216,7 @@
         <!--Map-->
         <scene sceneID="Xw5-gC-cgx">
             <objects>
-                <viewController id="sKV-gt-e4L" userLabel="Map" customClass="MapViewController" customModule="OnTheMap" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="sKV-gt-e4L" userLabel="Map" customClass="StudentsMapViewController" customModule="OnTheMap" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="jgT-39-7li">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -231,12 +235,27 @@
                         <viewLayoutGuide key="safeArea" id="NZA-nX-Jf0"/>
                     </view>
                     <navigationItem key="navigationItem" title="On The Map" id="Cex-44-fSP">
-                        <barButtonItem key="leftBarButtonItem" title="LOGOUT" id="TGQ-9j-qP0"/>
+                        <barButtonItem key="leftBarButtonItem" title="LOGOUT" id="TGQ-9j-qP0">
+                            <connections>
+                                <action selector="logout:" destination="sKV-gt-e4L" id="ZTM-hV-0C8"/>
+                            </connections>
+                        </barButtonItem>
                         <rightBarButtonItems>
-                            <barButtonItem image="icon_addpin" id="mlX-qK-N2f"/>
-                            <barButtonItem image="icon_refresh" id="srl-5t-5dj"/>
+                            <barButtonItem image="icon_addpin" id="mlX-qK-N2f">
+                                <connections>
+                                    <action selector="addLocation:" destination="sKV-gt-e4L" id="2hq-wh-6t5"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem image="icon_refresh" id="srl-5t-5dj">
+                                <connections>
+                                    <action selector="refresh:" destination="sKV-gt-e4L" id="niL-YC-OIJ"/>
+                                </connections>
+                            </barButtonItem>
                         </rightBarButtonItems>
                     </navigationItem>
+                    <connections>
+                        <outlet property="mapView" destination="wHO-QT-H8u" id="uln-H1-gUB"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cP5-m9-poq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
