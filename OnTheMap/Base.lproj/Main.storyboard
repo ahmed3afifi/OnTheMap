@@ -54,7 +54,6 @@
                                                             <color key="titleColor" red="0.93725490570000003" green="0.93725490570000003" blue="0.95686274770000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         </state>
                                                         <connections>
-                                                            <action selector="loginPressed:" destination="k8F-gK-nMR" eventType="touchUpInside" id="yWv-4W-kcO"/>
                                                             <action selector="loginTapped:" destination="k8F-gK-nMR" eventType="touchUpInside" id="QP4-Nw-fbd"/>
                                                         </connections>
                                                     </button>
@@ -106,6 +105,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="eVR-qT-Gun"/>
                     </view>
+                    <navigationItem key="navigationItem" id="IVp-4a-Q0B"/>
                     <connections>
                         <outlet property="emailTextField" destination="G9S-Ly-dsc" id="QJb-nL-s3V"/>
                         <outlet property="loginButton" destination="uug-r0-ttd" id="9zx-Te-Ohj"/>
@@ -115,12 +115,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sIZ-i2-K41" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="866.66666666666674" y="210.9375"/>
+            <point key="canvasLocation" x="1776.8115942028987" y="210.9375"/>
         </scene>
-        <!--Students Table View Controller-->
+        <!--List-->
         <scene sceneID="IJE-vT-NtA">
             <objects>
-                <viewController id="pI4-bf-Ege" userLabel="Students Table View Controller" customClass="StudentsTableViewController" customModule="OnTheMap" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="pI4-bf-Ege" userLabel="List" customClass="StudentsTableViewController" customModule="OnTheMap" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="JyK-Vu-AcG">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -190,32 +190,16 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Y90-bP-wiz"/>
                     </view>
-                    <navigationItem key="navigationItem" title="On The Map" id="Ner-OJ-KoH">
-                        <barButtonItem key="leftBarButtonItem" title="LOGOUT" id="2hZ-j7-zwN">
-                            <connections>
-                                <action selector="logout:" destination="pI4-bf-Ege" id="WfR-JC-g6d"/>
-                            </connections>
-                        </barButtonItem>
-                        <rightBarButtonItems>
-                            <barButtonItem image="icon_addpin" id="XJd-ZV-s46">
-                                <connections>
-                                    <action selector="addLocationPressed:" destination="pI4-bf-Ege" id="Gw8-Li-coe"/>
-                                </connections>
-                            </barButtonItem>
-                            <barButtonItem image="icon_refresh" id="EGs-HW-7rw">
-                                <connections>
-                                    <action selector="refreshPressed:" destination="pI4-bf-Ege" id="grc-zl-6Kj"/>
-                                </connections>
-                            </barButtonItem>
-                        </rightBarButtonItems>
-                    </navigationItem>
+                    <tabBarItem key="tabBarItem" title="" image="icon_listview-deselected" selectedImage="icon_listview-selected" id="K3q-bN-yqM"/>
+                    <navigationItem key="navigationItem" title="On The Map" id="Ner-OJ-KoH"/>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="studentsTableview" destination="e2n-3g-bjj" id="dbv-f2-0zh"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Y4A-vv-Rld" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3600.0000000000005" y="534.375"/>
+            <point key="canvasLocation" x="4510.144927536232" y="534.375"/>
         </scene>
         <!--Map-->
         <scene sceneID="Xw5-gC-cgx">
@@ -238,32 +222,16 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="NZA-nX-Jf0"/>
                     </view>
-                    <navigationItem key="navigationItem" title="On The Map" id="Cex-44-fSP">
-                        <barButtonItem key="leftBarButtonItem" title="LOGOUT" id="TGQ-9j-qP0">
-                            <connections>
-                                <action selector="logout:" destination="sKV-gt-e4L" id="ZTM-hV-0C8"/>
-                            </connections>
-                        </barButtonItem>
-                        <rightBarButtonItems>
-                            <barButtonItem image="icon_addpin" id="mlX-qK-N2f">
-                                <connections>
-                                    <action selector="addLocation:" destination="sKV-gt-e4L" id="2hq-wh-6t5"/>
-                                </connections>
-                            </barButtonItem>
-                            <barButtonItem image="icon_refresh" id="srl-5t-5dj">
-                                <connections>
-                                    <action selector="refresh:" destination="sKV-gt-e4L" id="niL-YC-OIJ"/>
-                                </connections>
-                            </barButtonItem>
-                        </rightBarButtonItems>
-                    </navigationItem>
+                    <tabBarItem key="tabBarItem" title="" image="icon_mapview-deselected" selectedImage="icon_mapview-selected" id="jYG-G4-Q4C"/>
+                    <navigationItem key="navigationItem" title="On The Map" id="Cex-44-fSP"/>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="mapView" destination="wHO-QT-H8u" id="uln-H1-gUB"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cP5-m9-poq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3597.1014492753625" y="-113.16964285714285"/>
+            <point key="canvasLocation" x="4507.2463768115949" y="-113.16964285714285"/>
         </scene>
         <!--Add Location-->
         <scene sceneID="U7Y-wy-FMe">
@@ -304,6 +272,7 @@
                                                 <color key="tintColor" red="0.93725490570000003" green="0.93725490570000003" blue="0.95686274770000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <state key="normal" title="FIND LOCATION"/>
                                                 <connections>
+                                                    <action selector="findLocationButton:" destination="ozh-OJ-uSO" eventType="touchUpInside" id="MEj-Gb-9Wy"/>
                                                     <segue destination="GEN-L4-ddF" kind="show" id="hfO-40-hYd"/>
                                                 </connections>
                                             </button>
@@ -330,7 +299,11 @@
                         <viewLayoutGuide key="safeArea" id="O6D-hf-Obj"/>
                     </view>
                     <navigationItem key="navigationItem" title="Add Location" id="L4k-yQ-ppc">
-                        <barButtonItem key="leftBarButtonItem" title="CANCEL" id="EiB-tg-dUM"/>
+                        <barButtonItem key="leftBarButtonItem" title="CANCEL" id="EiB-tg-dUM">
+                            <connections>
+                                <action selector="cancel:" destination="ozh-OJ-uSO" id="Lkc-Pd-cUO"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="findLocationButton" destination="4Li-6Z-XCj" id="FwE-o0-llf"/>
@@ -340,7 +313,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GEX-00-i6h" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5583" y="238"/>
+            <point key="canvasLocation" x="6557" y="238"/>
         </scene>
         <!--Maps LocationVC-->
         <scene sceneID="aoe-ra-2iS">
@@ -354,28 +327,31 @@
                                 <rect key="frame" x="0.0" y="88" width="414" height="774"/>
                             </mapView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DaI-Fa-gQ8">
-                                <rect key="frame" x="82" y="782" width="250" height="50"/>
+                                <rect key="frame" x="40" y="782" width="334" height="50"/>
                                 <color key="backgroundColor" red="0.29726782441139221" green="0.62940001487731934" blue="0.84711241722106934" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="DIV-wa-vaJ"/>
+                                    <constraint firstAttribute="height" constant="50" id="B89-hV-Tze"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="tintColor" red="0.93725490570000003" green="0.93725490570000003" blue="0.95686274770000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <state key="normal" title="FINISH">
                                     <color key="titleColor" red="0.93725490570000003" green="0.93725490570000003" blue="0.95686274770000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
+                                <connections>
+                                    <action selector="finishTapped:" destination="GEN-L4-ddF" eventType="touchUpInside" id="xNO-e7-sv7"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="wb1-UY-CNa" firstAttribute="bottom" secondItem="DaI-Fa-gQ8" secondAttribute="bottom" constant="30" id="0bb-gV-eE6"/>
-                            <constraint firstItem="DaI-Fa-gQ8" firstAttribute="leading" secondItem="wb1-UY-CNa" secondAttribute="leading" constant="82" id="1xm-A5-gBl"/>
-                            <constraint firstItem="DaI-Fa-gQ8" firstAttribute="centerX" secondItem="qFI-Df-GoZ" secondAttribute="centerX" id="2c5-JA-Eac"/>
-                            <constraint firstItem="wb1-UY-CNa" firstAttribute="trailing" secondItem="DaI-Fa-gQ8" secondAttribute="trailing" constant="82" id="8BX-hO-0mR"/>
                             <constraint firstItem="WPD-P9-DsO" firstAttribute="top" secondItem="wb1-UY-CNa" secondAttribute="top" id="BBm-gn-EO1"/>
+                            <constraint firstItem="wb1-UY-CNa" firstAttribute="bottom" secondItem="DaI-Fa-gQ8" secondAttribute="bottom" constant="30" id="KbY-Ec-NBQ"/>
                             <constraint firstItem="wb1-UY-CNa" firstAttribute="trailing" secondItem="WPD-P9-DsO" secondAttribute="trailing" id="LI4-ug-QHi"/>
                             <constraint firstItem="WPD-P9-DsO" firstAttribute="leading" secondItem="wb1-UY-CNa" secondAttribute="leading" id="PJC-Lf-Nln"/>
+                            <constraint firstItem="DaI-Fa-gQ8" firstAttribute="leading" secondItem="wb1-UY-CNa" secondAttribute="leading" constant="40" id="Ri5-6Z-QHo"/>
+                            <constraint firstItem="wb1-UY-CNa" firstAttribute="trailing" secondItem="DaI-Fa-gQ8" secondAttribute="trailing" constant="40" id="kZ5-oX-P7F"/>
                             <constraint firstItem="wb1-UY-CNa" firstAttribute="bottom" secondItem="WPD-P9-DsO" secondAttribute="bottom" id="otQ-wt-Vwi"/>
+                            <constraint firstItem="DaI-Fa-gQ8" firstAttribute="centerX" secondItem="qFI-Df-GoZ" secondAttribute="centerX" id="peP-3v-h1X"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="wb1-UY-CNa"/>
                     </view>
@@ -385,7 +361,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="D1Z-1N-Ri4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6572.4637681159429" y="237.72321428571428"/>
+            <point key="canvasLocation" x="7482.6086956521749" y="237.72321428571428"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="IIb-hI-jth">
@@ -403,12 +379,13 @@
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MZq-UE-oqI" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1770" y="211"/>
+            <point key="canvasLocation" x="2679.7101449275365" y="210.9375"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Map-->
         <scene sceneID="W1h-g0-9f6">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="GGZ-Fy-wFg" sceneMemberID="viewController">
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Mg0-kq-fH8" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <navigationController title="Map" automaticallyAdjustsScrollViewInsets="NO" id="GGZ-Fy-wFg" userLabel="Map" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="" image="icon_mapview-deselected" selectedImage="icon_mapview-selected" id="WdS-zx-tlp"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="WEd-2K-pM1">
@@ -420,14 +397,13 @@
                         <segue destination="sKV-gt-e4L" kind="relationship" relationship="rootViewController" id="X6I-zk-Xyt"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Mg0-kq-fH8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2686.9565217391305" y="-113.16964285714285"/>
+            <point key="canvasLocation" x="3597.1014492753625" y="-113.16964285714285"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--List-->
         <scene sceneID="D9a-R4-Uni">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="zR7-cV-v5X" sceneMemberID="viewController">
+                <navigationController title="List" automaticallyAdjustsScrollViewInsets="NO" id="zR7-cV-v5X" userLabel="List" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="" image="icon_listview-deselected" selectedImage="icon_listview-selected" id="XML-Zs-iye"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="3ka-hc-Pid">
@@ -441,12 +417,12 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3lA-du-d0Y" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2689.8550724637685" y="534.375"/>
+            <point key="canvasLocation" x="3600.0000000000005" y="534.375"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Add Location-->
         <scene sceneID="oua-5r-xMt">
             <objects>
-                <navigationController storyboardIdentifier="AddLocationNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="nuc-wI-YIR" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="AddLocationNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="nuc-wI-YIR" userLabel="Add Location" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="dU3-fq-Mnp">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
@@ -459,17 +435,15 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qCJ-QK-VXQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4618.840579710145" y="237.72321428571428"/>
+            <point key="canvasLocation" x="5528.985507246377" y="237.72321428571428"/>
         </scene>
     </scenes>
     <resources>
-        <image name="icon_addpin" width="24" height="24"/>
         <image name="icon_listview-deselected" width="75" height="50"/>
         <image name="icon_listview-selected" width="75" height="50"/>
         <image name="icon_mapview-deselected" width="75" height="50"/>
         <image name="icon_mapview-selected" width="75" height="50"/>
         <image name="icon_pin" width="24" height="24"/>
-        <image name="icon_refresh" width="24" height="24"/>
         <image name="icon_world" width="52" height="67"/>
         <image name="logo-u" width="62" height="62"/>
     </resources>

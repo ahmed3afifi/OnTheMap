@@ -11,35 +11,13 @@ import MapKit
 import SafariServices
 
 
-class StudentsMapViewController: UIViewController, MKMapViewDelegate {
+class StudentsMapViewController: HeaderViewController {
     
     @IBOutlet weak var mapView: MKMapView!
-    var studentsLocation = [StudentLocation]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         mapView.delegate = self
-    }
-    
-    @IBAction func addLocation(_ sender: Any) {
-        let mapVC = self.storyboard?.instantiateViewController(withIdentifier: "AddLocationNavigationController") as! UINavigationController
-        self.present(mapVC, animated: true, completion: nil)
-    }
-    
-    @IBAction func refresh(_ sender: Any) {
-        API.shared.getStudentsLocations { (result, error) in
-            guard let result = result else {
-                return
-            }
-            guard result.count != 0 else{
-                return
-            }
-            self.studentsLocation = result
-        }
-    }
-    
-    @IBAction func logout(_ sender: Any) {
-        self.dismiss(animated: true, completion: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -80,6 +58,9 @@ class StudentsMapViewController: UIViewController, MKMapViewDelegate {
             }
         }
     }
+}
+
+extension StudentsMapViewController: MKMapViewDelegate {
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         let reuseid = "pin"
@@ -105,6 +86,15 @@ class StudentsMapViewController: UIViewController, MKMapViewDelegate {
         }
     }
     
+    func mapView(mapView: MKMapView, annotationView: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+        if control == annotationView.rightCalloutAccessoryView {
+            guard let newUrl = annotationView.annotation?.subtitle else {return}
+            guard let stringUrl = newUrl else {return}
+            guard let url = URL(string: stringUrl) else {return}
+            openUrlInSafari(url:url)
+        }
+    }
+    
     func openUrlInSafari(url:URL){
         if url.absoluteString.contains("http://"){
             let svc = SFSafariViewController(url: url)
@@ -115,9 +105,6 @@ class StudentsMapViewController: UIViewController, MKMapViewDelegate {
             }
         }
     }
-    
-    
-    
-}
 
+}
 

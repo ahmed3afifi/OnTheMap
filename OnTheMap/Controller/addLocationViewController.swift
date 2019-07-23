@@ -15,14 +15,14 @@ class addLocationViewController: UIViewController {
     @IBOutlet weak var locationName: UITextField!
     @IBOutlet weak var mediaURL: UITextField!
     @IBOutlet weak var findLocationButton: UIButton!
-    var newLocation = [StudentLocation]()
+    var newLocation = StudentLocation()
     var latitude: Double?
     var longitude: Double?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        locationName.delegate = self as? UITextFieldDelegate
-        mediaURL.delegate = self as? UITextFieldDelegate
+        locationName.delegate = self
+        mediaURL.delegate = self
         locationName.borderStyle = .roundedRect
         mediaURL.borderStyle = .roundedRect
         findLocationButton.layer.cornerRadius = 5
@@ -30,7 +30,7 @@ class addLocationViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        //unsubscribeFromAllNotifications()
+        unsubscribeFromAllNotifications()
     }
     
     
@@ -41,7 +41,7 @@ class addLocationViewController: UIViewController {
     
     @IBAction func findLocationButton(_ sender: Any) {
         if locationName.text != "" && mediaURL.text != "" {
-
+            ActivityIndicator.startActivityIndicator(view: self.view )
             let searchRequest = MKLocalSearch.Request()
             searchRequest.naturalLanguageQuery = locationName.text
             
@@ -51,8 +51,10 @@ class addLocationViewController: UIViewController {
                 DispatchQueue.main.async {
                     
                     if error != nil {
+                        ActivityIndicator.stopActivityIndicator()
                         print("Location Error : \(error!.localizedDescription)")
                     }else {
+                        ActivityIndicator.stopActivityIndicator()
                         self.latitude = response?.boundingRegion.center.latitude
                         self.longitude = response?.boundingRegion.center.longitude
                         self.performSegue(withIdentifier: "showLocation", sender: nil)
@@ -64,6 +66,44 @@ class addLocationViewController: UIViewController {
                 
                 print("error")
             }
+        }
+    }
+    
+    func geoCodeCoordinates(_ studentLocation: StudentLocation) {
+        
+        let ai = self.startAnActivityIndicator()
+        CLGeocoder().geocodeAddressString(studentLocation.mapString!) { (placeMarks, error) in
+            ai.stopAnimating()
+            if error != nil {
+                print(error?.localizedDescription ?? " ")
+                return
+            }
+            guard let placeMarks = placeMarks else {
+                print("unable to find locatoin")
+                return
+            }
+            print("placeMarks: \(placeMarks)")
+            print("placeMarks.first?.location?.coordinate: \(String(describing: placeMarks.first?.location?.coordinate))")
+            if placeMarks.count <= 0 {
+                print("placeMarks is lower than zero!")
+                return
+            }
+            
+            let selectedLocation = placeMarks.first?.location?.coordinate
+            self.newLocation = studentLocation
+            self.newLocation.latitude = selectedLocation?.latitude
+            self.newLocation.longitude = selectedLocation?.longitude
+            self.performSegue(withIdentifier: "mapsLocation", sender: self.newLocation)
+        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showLocation" {
+            let vc = segue.destination as! mapsLocationVC
+            vc.mapString = locationName.text!
+            vc.mediaURL = mediaURL.text!
+            vc.latitude = self.latitude
+            vc.longitude = self.longitude
         }
     }
     
@@ -98,8 +138,6 @@ extension addLocationViewController: UITextFieldDelegate {
     }
     
 }
-
-
 
 private extension addLocationViewController {
     

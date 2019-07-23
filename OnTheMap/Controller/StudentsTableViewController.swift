@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class StudentsTableViewController: UIViewController {
+class StudentsTableViewController: HeaderViewController {
     
     @IBOutlet weak var studentsTableview: UITableView!
     var result = [StudentLocation]()
@@ -18,9 +18,10 @@ class StudentsTableViewController: UIViewController {
         super.viewDidLoad()
         studentsTableview.delegate = self
         studentsTableview.dataSource = self
+        result = StudentLocation.lastFetched ?? []
     }
     
-    @IBAction func addLocationPressed(_ sender: Any) {
+    /*@IBAction func addLocationPressed(_ sender: Any) {
         let mapVC = self.storyboard?.instantiateViewController(withIdentifier: "AddLocationNavigationController") as! UINavigationController
         self.present(mapVC, animated: true, completion: nil)
     }
@@ -39,8 +40,7 @@ class StudentsTableViewController: UIViewController {
     
     @IBAction func logout(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
-    }
-    
+    }*/
     
 }
     

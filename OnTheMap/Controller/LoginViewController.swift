@@ -8,7 +8,7 @@
 
 import UIKit
 
-class LoginViewController: UIViewController, UITextFieldDelegate {
+class LoginViewController: UIViewController {
 
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
@@ -33,10 +33,10 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         unsubscribeFromAllNotifications()
     }
     
-    /*@objc private func addLocation(_ sender: Any){
+    @objc private func addLocation(_ sender: Any){
         let navController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "AddLocationNavigationController") as! UINavigationController
         present(navController, animated: true, completion: nil)
-    } */
+    }
     
     private func fieldsChecker(){
         if (emailTextField.text?.isEmpty)! || (passwordTextField.text?.isEmpty)!  {
@@ -51,7 +51,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     @IBAction func loginTapped(_ sender: Any) {
         
         fieldsChecker()
-        API.shared.loginRequest(emailTextField.text!, passwordTextField.text!) {(successful, error) in
+        API.shared.login(emailTextField.text!, passwordTextField.text!) {(successful, error) in
             DispatchQueue.main.async {
                 // for any error not expeceted
                 if let error = error {
@@ -74,9 +74,10 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                     
                     // move to next storyboard
                     let mapVC = self.storyboard?.instantiateViewController(withIdentifier: "TabBarController") as! UITabBarController
+                    self.present(mapVC, animated: true, completion: nil)
                     
                     //self.navigationController!.pushViewController(mapVC, animated: true)
-                    self.present(mapVC, animated: true, completion: nil)
+                    //self.present(mapVC, animated: true, completion: nil)
                 }
             }
         }
@@ -89,12 +90,18 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         UIApplication.shared.open(url, options: [:], completionHandler: nil)
     }
     
+}
+    
+extension LoginViewController: UITextFieldDelegate {
+    
+    // MARK: UITextFieldDelegate
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.endEditing(true)
         textField.resignFirstResponder()
         return true
     }
     
+    // MARK: Show/Hide Keyboard
     func keyboardHeight(_ notification: Notification) -> CGFloat {
         let userInfo = (notification as NSNotification).userInfo
         let keyboardSize = userInfo![UIResponder.keyboardFrameEndUserInfoKey] as! NSValue
@@ -116,6 +123,10 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             textField.resignFirstResponder()
         }
     }
+}
+
+    
+private extension LoginViewController {
     
     func subscribeToNotification(_ notification: NSNotification.Name, selector: Selector) {
         NotificationCenter.default.addObserver(self, selector: selector, name: notification, object: nil)
@@ -124,6 +135,5 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     func unsubscribeFromAllNotifications() {
         NotificationCenter.default.removeObserver(self)
     }
-    
 }
 

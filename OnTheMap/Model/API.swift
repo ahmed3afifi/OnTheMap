@@ -26,7 +26,7 @@ class API: NSObject {
     
     static let shared = API()
     
-    func loginRequest(_ email: String,_ password: String, completion: @escaping (Bool, Error?)->()) {
+    func login(_ email: String,_ password: String, completion: @escaping (Bool, Error?)->()) {
         
         var request = URLRequest(url: URL(string: "https://onthemap-api.udacity.com/v1/session")!)
         request.httpMethod = "POST"
@@ -83,8 +83,12 @@ class API: NSObject {
         task.resume()
     }
     
+    private func dispalyError(_ error: String){
+        print(error)
+    }
     
-    func logoutRequest() {
+    
+    func logout() {
         
         var request = URLRequest(url: URL(string: "https://onthemap-api.udacity.com/v1/session")!)
         request.httpMethod = "DELETE"
@@ -161,6 +165,10 @@ func getStudentsLocations(limit: Int = 100, skip: Int = 0, orderby: Param = .upd
 
 func getUser(completionHandlerForGet: @escaping (_ success: Bool, _ student: StudentLocation?, _ errorString: String?) -> Void) {
     
+    if accountKey == nil {
+        completionHandlerForGet(false, nil, "could not find account key")
+        return
+    }
     let urlString = "https://onthemap-api.udacity.com/v1/users/\(accountKey)"
     let url = URL(string: urlString)
     print("account key: \(accountKey)")
@@ -196,6 +204,10 @@ func getUser(completionHandlerForGet: @escaping (_ success: Bool, _ student: Stu
             student.lastName = decodedData.lastName
             student.uniqueKey = self.accountKey
             completionHandlerForGet(true, student, nil)
+        } catch let error {
+            print(error.localizedDescription)
+            completionHandlerForGet(false, nil, error.localizedDescription)
+            return
         }
         print(String(data: data, encoding: .utf8)!)
     }
@@ -240,9 +252,6 @@ func getUser(completionHandlerForGet: @escaping (_ success: Bool, _ student: Stu
                 let decodedData = try! decoder.decode(StudentLocation.self, from: data)
                 completionHandlerPost(true, nil)
                 print(decodedData)
-            } catch let error {
-                print(error.localizedDescription)
-                return
             }
             print(String(data: data, encoding: .utf8)!)
         }
