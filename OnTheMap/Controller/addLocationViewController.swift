@@ -40,6 +40,7 @@ class addLocationViewController: UIViewController {
     
     
     @IBAction func findLocationButton(_ sender: Any) {
+        
         if locationName.text != "" && mediaURL.text != "" {
             ActivityIndicator.startActivityIndicator(view: self.view )
             let searchRequest = MKLocalSearch.Request()
@@ -58,6 +59,8 @@ class addLocationViewController: UIViewController {
                         self.latitude = response?.boundingRegion.center.latitude
                         self.longitude = response?.boundingRegion.center.longitude
                         self.performSegue(withIdentifier: "showLocation", sender: nil)
+                        //let controller = self.storyboard!.instantiateViewController(withIdentifier: "mapsLocation")
+                        //self.present(controller, animated: true, completion: nil)
                     }
                 }
             }
@@ -99,7 +102,7 @@ class addLocationViewController: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showLocation" {
-            let vc = segue.destination as! mapsLocationVC
+            let vc = segue.destination as! mapsLocationViewController
             vc.mapString = locationName.text!
             vc.mediaURL = mediaURL.text!
             vc.latitude = self.latitude

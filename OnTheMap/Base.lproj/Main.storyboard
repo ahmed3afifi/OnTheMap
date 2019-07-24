@@ -273,7 +273,7 @@
                                                 <state key="normal" title="FIND LOCATION"/>
                                                 <connections>
                                                     <action selector="findLocationButton:" destination="ozh-OJ-uSO" eventType="touchUpInside" id="MEj-Gb-9Wy"/>
-                                                    <segue destination="GEN-L4-ddF" kind="show" id="hfO-40-hYd"/>
+                                                    <segue destination="GEN-L4-ddF" kind="show" identifier="showLocation" id="hfO-40-hYd"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -315,10 +315,10 @@
             </objects>
             <point key="canvasLocation" x="6557" y="238"/>
         </scene>
-        <!--Maps LocationVC-->
+        <!--Maps Location View Controller-->
         <scene sceneID="aoe-ra-2iS">
             <objects>
-                <viewController storyboardIdentifier="mapsLocation" id="GEN-L4-ddF" customClass="mapsLocationVC" customModule="OnTheMap" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="mapsLocation" id="GEN-L4-ddF" customClass="mapsLocationViewController" customModule="OnTheMap" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="qFI-Df-GoZ">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -327,10 +327,10 @@
                                 <rect key="frame" x="0.0" y="88" width="414" height="774"/>
                             </mapView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DaI-Fa-gQ8">
-                                <rect key="frame" x="40" y="782" width="334" height="50"/>
+                                <rect key="frame" x="50" y="783" width="314" height="50"/>
                                 <color key="backgroundColor" red="0.29726782441139221" green="0.62940001487731934" blue="0.84711241722106934" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="B89-hV-Tze"/>
+                                    <constraint firstAttribute="height" constant="50" id="5Jy-13-odV"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="tintColor" red="0.93725490570000003" green="0.93725490570000003" blue="0.95686274770000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -344,14 +344,13 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="wb1-UY-CNa" firstAttribute="bottom" secondItem="DaI-Fa-gQ8" secondAttribute="bottom" constant="29" id="41g-2Y-oQ8"/>
+                            <constraint firstItem="DaI-Fa-gQ8" firstAttribute="leading" secondItem="wb1-UY-CNa" secondAttribute="leading" constant="50" id="4Pf-qd-2G3"/>
                             <constraint firstItem="WPD-P9-DsO" firstAttribute="top" secondItem="wb1-UY-CNa" secondAttribute="top" id="BBm-gn-EO1"/>
-                            <constraint firstItem="wb1-UY-CNa" firstAttribute="bottom" secondItem="DaI-Fa-gQ8" secondAttribute="bottom" constant="30" id="KbY-Ec-NBQ"/>
                             <constraint firstItem="wb1-UY-CNa" firstAttribute="trailing" secondItem="WPD-P9-DsO" secondAttribute="trailing" id="LI4-ug-QHi"/>
                             <constraint firstItem="WPD-P9-DsO" firstAttribute="leading" secondItem="wb1-UY-CNa" secondAttribute="leading" id="PJC-Lf-Nln"/>
-                            <constraint firstItem="DaI-Fa-gQ8" firstAttribute="leading" secondItem="wb1-UY-CNa" secondAttribute="leading" constant="40" id="Ri5-6Z-QHo"/>
-                            <constraint firstItem="wb1-UY-CNa" firstAttribute="trailing" secondItem="DaI-Fa-gQ8" secondAttribute="trailing" constant="40" id="kZ5-oX-P7F"/>
+                            <constraint firstItem="wb1-UY-CNa" firstAttribute="trailing" secondItem="DaI-Fa-gQ8" secondAttribute="trailing" constant="50" id="Xjm-bb-J8L"/>
                             <constraint firstItem="wb1-UY-CNa" firstAttribute="bottom" secondItem="WPD-P9-DsO" secondAttribute="bottom" id="otQ-wt-Vwi"/>
-                            <constraint firstItem="DaI-Fa-gQ8" firstAttribute="centerX" secondItem="qFI-Df-GoZ" secondAttribute="centerX" id="peP-3v-h1X"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="wb1-UY-CNa"/>
                     </view>
@@ -419,10 +418,10 @@
             </objects>
             <point key="canvasLocation" x="3600.0000000000005" y="534.375"/>
         </scene>
-        <!--Add Location-->
+        <!--Navigation Controller-->
         <scene sceneID="oua-5r-xMt">
             <objects>
-                <navigationController storyboardIdentifier="AddLocationNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="nuc-wI-YIR" userLabel="Add Location" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="AddLocationNavigationController" id="nuc-wI-YIR" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="dU3-fq-Mnp">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>

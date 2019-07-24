@@ -9,10 +9,10 @@
 import UIKit
 import MapKit
 
-class mapsLocationVC: UIViewController, MKMapViewDelegate {
+class mapsLocationViewController: UIViewController, MKMapViewDelegate {
     
     @IBOutlet weak var mapView: MKMapView!
-    static let shared = mapsLocationVC()
+    static let shared = mapsLocationViewController()
     var location: StudentLocation?
     var selectedLocation = CLLocationCoordinate2D(latitude: 0, longitude: 0)
     var locationTitle = ""
@@ -37,8 +37,8 @@ class mapsLocationVC: UIViewController, MKMapViewDelegate {
     
     func createAnnotation() {
         let annotation = MKPointAnnotation()
-        annotation.title = mapString!
-        annotation.subtitle = mediaURL!
+        annotation.title = mapString
+        annotation.subtitle = mediaURL
         annotation.coordinate = CLLocationCoordinate2DMake(latitude ?? 0.0, longitude ?? 0.0)
         self.mapView.addAnnotation(annotation)
         
@@ -54,7 +54,6 @@ class mapsLocationVC: UIViewController, MKMapViewDelegate {
     }
     
     @IBAction func finishTapped(_ sender: Any) {
-        
         API.shared.getUser { (success, student, errorMessage) in
             if success {
                 print("student?.uniqueKey: \(String(describing: student?.uniqueKey))")

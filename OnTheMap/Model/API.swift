@@ -165,10 +165,10 @@ func getStudentsLocations(limit: Int = 100, skip: Int = 0, orderby: Param = .upd
 
 func getUser(completionHandlerForGet: @escaping (_ success: Bool, _ student: StudentLocation?, _ errorString: String?) -> Void) {
     
-    if accountKey == nil {
+    /*if accountKey == nil {
         completionHandlerForGet(false, nil, "could not find account key")
         return
-    }
+    }*/
     let urlString = "https://onthemap-api.udacity.com/v1/users/\(accountKey)"
     let url = URL(string: urlString)
     print("account key: \(accountKey)")
@@ -204,11 +204,11 @@ func getUser(completionHandlerForGet: @escaping (_ success: Bool, _ student: Stu
             student.lastName = decodedData.lastName
             student.uniqueKey = self.accountKey
             completionHandlerForGet(true, student, nil)
-        } catch let error {
+        } /*catch let error {
             print(error.localizedDescription)
             completionHandlerForGet(false, nil, error.localizedDescription)
             return
-        }
+        }*/
         print(String(data: data, encoding: .utf8)!)
     }
     task.resume()
