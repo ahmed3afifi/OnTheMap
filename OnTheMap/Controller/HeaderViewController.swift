@@ -29,7 +29,7 @@ class HeaderViewController: UIViewController {
     }
     
     @objc private func refresh(_ sender: Any){
-        API.shared.getStudentsLocations { (result, error) in
+        Client.shared.getStudentsLocations { (result, error) in
             guard let result = result else {
                 return
             }

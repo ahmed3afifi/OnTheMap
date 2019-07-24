@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 import CoreLocation
 
-class API: NSObject {
+class Client: NSObject {
     
     var accountKey: String = ""
     var createdAt : String = ""
@@ -24,7 +24,7 @@ class API: NSObject {
     var uniqueKey : String = ""
     var updatedAt : String = ""
     
-    static let shared = API()
+    static let shared = Client()
     
     func login(_ email: String,_ password: String, completion: @escaping (Bool, Error?)->()) {
         
@@ -171,8 +171,6 @@ func getUser(completionHandlerForGet: @escaping (_ success: Bool, _ student: Stu
     }*/
     let urlString = "https://onthemap-api.udacity.com/v1/users/\(accountKey)"
     let url = URL(string: urlString)
-    print("account key: \(accountKey)")
-    print("url is: \(url!)")
     var request = URLRequest(url: url!)
     request.httpMethod = "GET"
     request.addValue("QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr", forHTTPHeaderField: "X-Parse-Application-Id")

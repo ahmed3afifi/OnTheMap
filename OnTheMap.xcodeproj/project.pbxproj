@@ -22,7 +22,7 @@
 		76C2F07822DFFFF500AE9F2C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 76C2F07722DFFFF500AE9F2C /* Assets.xcassets */; };
 		76C2F07B22DFFFF500AE9F2C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 76C2F07922DFFFF500AE9F2C /* LaunchScreen.storyboard */; };
 		76C2F08622E12B1000AE9F2C /* Authentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76C2F08522E12B1000AE9F2C /* Authentication.swift */; };
-		76C2F08822E138B600AE9F2C /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76C2F08722E138B600AE9F2C /* API.swift */; };
+		76C2F08822E138B600AE9F2C /* Client.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76C2F08722E138B600AE9F2C /* Client.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -43,7 +43,7 @@
 		76C2F07A22DFFFF500AE9F2C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		76C2F07C22DFFFF500AE9F2C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		76C2F08522E12B1000AE9F2C /* Authentication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Authentication.swift; sourceTree = "<group>"; };
-		76C2F08722E138B600AE9F2C /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
+		76C2F08722E138B600AE9F2C /* Client.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Client.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,9 +90,6 @@
 				76C2F08322E1154000AE9F2C /* View */,
 				76C2F08422E1154700AE9F2C /* Controller */,
 				76C2F07022DFFFF300AE9F2C /* AppDelegate.swift */,
-				76C2F07422DFFFF300AE9F2C /* Main.storyboard */,
-				76C2F07722DFFFF500AE9F2C /* Assets.xcassets */,
-				76C2F07922DFFFF500AE9F2C /* LaunchScreen.storyboard */,
 				76C2F07C22DFFFF500AE9F2C /* Info.plist */,
 			);
 			path = OnTheMap;
@@ -102,9 +99,8 @@
 			isa = PBXGroup;
 			children = (
 				76C2F08522E12B1000AE9F2C /* Authentication.swift */,
-				76C2F08722E138B600AE9F2C /* API.swift */,
+				76C2F08722E138B600AE9F2C /* Client.swift */,
 				7609BFE122E20EAB00287545 /* StudentsLocations.swift */,
-				761CEC1B22E66435003CC0CF /* ActivityIndicator.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -112,6 +108,10 @@
 		76C2F08322E1154000AE9F2C /* View */ = {
 			isa = PBXGroup;
 			children = (
+				761CEC1B22E66435003CC0CF /* ActivityIndicator.swift */,
+				76C2F07422DFFFF300AE9F2C /* Main.storyboard */,
+				76C2F07722DFFFF500AE9F2C /* Assets.xcassets */,
+				76C2F07922DFFFF500AE9F2C /* LaunchScreen.storyboard */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -210,7 +210,7 @@
 				76BADEE722E5345A0011C0AD /* addLocationViewController.swift in Sources */,
 				7609BFE222E20EAB00287545 /* StudentsLocations.swift in Sources */,
 				761CEC1C22E66435003CC0CF /* ActivityIndicator.swift in Sources */,
-				76C2F08822E138B600AE9F2C /* API.swift in Sources */,
+				76C2F08822E138B600AE9F2C /* Client.swift in Sources */,
 				7609BFE722E3D57F00287545 /* StudentsTableViewController.swift in Sources */,
 				76C2F08622E12B1000AE9F2C /* Authentication.swift in Sources */,
 			);

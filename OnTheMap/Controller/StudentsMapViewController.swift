@@ -22,7 +22,7 @@ class StudentsMapViewController: HeaderViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         
-        API.shared.getStudentsLocations(){(result, error) in
+        Client.shared.getStudentsLocations(){(result, error) in
             DispatchQueue.main.async {
                 if error != nil {
                     let alert = UIAlertController(title: "Fail", message: "sorry, we could not fetch data", preferredStyle: .alert)
