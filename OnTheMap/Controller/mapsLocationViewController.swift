@@ -13,7 +13,7 @@ class mapsLocationViewController: UIViewController, MKMapViewDelegate {
     
     @IBOutlet weak var mapView: MKMapView!
     static let shared = mapsLocationViewController()
-    var location: StudentLocation?
+    var location: StudentsLocations?
     var selectedLocation = CLLocationCoordinate2D(latitude: 0, longitude: 0)
     var locationTitle = ""
     var url = ""
@@ -54,7 +54,7 @@ class mapsLocationViewController: UIViewController, MKMapViewDelegate {
     }
     
     @IBAction func finishTapped(_ sender: Any) {
-        Client.shared.getUser { (success, student, errorMessage) in
+        ParseAPI.shared.getUser { (success, student, errorMessage) in
             if success {
                 print("student?.uniqueKey: \(String(describing: student?.uniqueKey))")
                 DispatchQueue.main.async {
@@ -68,8 +68,8 @@ class mapsLocationViewController: UIViewController, MKMapViewDelegate {
         }
     }
     
-    func sendInformation(_ student: StudentLocation){
-        var newStudent = StudentLocation()
+    func sendInformation(_ student: StudentsLocations){
+        var newStudent = StudentsLocations()
         newStudent.uniqueKey = student.uniqueKey
         newStudent.firstName = student.firstName
         newStudent.lastName = student.lastName
@@ -77,7 +77,7 @@ class mapsLocationViewController: UIViewController, MKMapViewDelegate {
         newStudent.mediaURL = student.mediaURL
         newStudent.longitude = student.longitude
         newStudent.latitude = student.latitude
-        Client.shared.postStudent(newStudent) { (success, errorMessage) in
+        ParseAPI.shared.postStudent(newStudent) { (success, errorMessage) in
             if success {
                 DispatchQueue.main.async {
                     self.navigationController?.popToRootViewController(animated: true)

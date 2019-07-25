@@ -22,7 +22,7 @@ class StudentsMapViewController: HeaderViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         
-        Client.shared.getStudentsLocations(){(result, error) in
+        ParseAPI.shared.getStudentsLocations(){(result, error) in
             DispatchQueue.main.async {
                 if error != nil {
                     let alert = UIAlertController(title: "Fail", message: "sorry, we could not fetch data", preferredStyle: .alert)
@@ -37,7 +37,7 @@ class StudentsMapViewController: HeaderViewController {
                     return
                 }
                 
-                StudentLocation.lastFetched = result
+                StudentsLocations.lastFetched = result
                 var map = [MKPointAnnotation]()
                 
                 for location in result! {

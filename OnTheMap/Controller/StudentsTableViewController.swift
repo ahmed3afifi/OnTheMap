@@ -12,13 +12,13 @@ import UIKit
 class StudentsTableViewController: HeaderViewController {
     
     @IBOutlet weak var studentsTableview: UITableView!
-    var result = [StudentLocation]()
+    var result = [StudentsLocations]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         studentsTableview.delegate = self
         studentsTableview.dataSource = self
-        result = StudentLocation.lastFetched ?? []
+        result = StudentsLocations.lastFetched ?? []
     }
     
     /*@IBAction func addLocationPressed(_ sender: Any) {

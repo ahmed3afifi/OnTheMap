@@ -15,7 +15,7 @@ class addLocationViewController: UIViewController {
     @IBOutlet weak var locationName: UITextField!
     @IBOutlet weak var mediaURL: UITextField!
     @IBOutlet weak var findLocationButton: UIButton!
-    var newLocation = StudentLocation()
+    //var newLocation = StudentsLocations()
     var latitude: Double?
     var longitude: Double?
     
@@ -72,33 +72,7 @@ class addLocationViewController: UIViewController {
         }
     }
     
-    func geoCodeCoordinates(_ studentLocation: StudentLocation) {
-        
-        let ai = self.startAnActivityIndicator()
-        CLGeocoder().geocodeAddressString(studentLocation.mapString!) { (placeMarks, error) in
-            ai.stopAnimating()
-            if error != nil {
-                print(error?.localizedDescription ?? " ")
-                return
-            }
-            guard let placeMarks = placeMarks else {
-                print("unable to find locatoin")
-                return
-            }
-            print("placeMarks: \(placeMarks)")
-            print("placeMarks.first?.location?.coordinate: \(String(describing: placeMarks.first?.location?.coordinate))")
-            if placeMarks.count <= 0 {
-                print("placeMarks is lower than zero!")
-                return
-            }
-            
-            let selectedLocation = placeMarks.first?.location?.coordinate
-            self.newLocation = studentLocation
-            self.newLocation.latitude = selectedLocation?.latitude
-            self.newLocation.longitude = selectedLocation?.longitude
-            self.performSegue(withIdentifier: "mapsLocation", sender: self.newLocation)
-        }
-    }
+    
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showLocation" {

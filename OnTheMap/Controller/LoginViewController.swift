@@ -51,7 +51,7 @@ class LoginViewController: UIViewController {
     @IBAction func loginTapped(_ sender: Any) {
         
         fieldsChecker()
-        Client.shared.login(emailTextField.text!, passwordTextField.text!) {(successful, error) in
+        ParseAPI.shared.login(emailTextField.text!, passwordTextField.text!) {(successful, error) in
             DispatchQueue.main.async {
                 // for any error not expeceted
                 if let error = error {

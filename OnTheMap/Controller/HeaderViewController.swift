@@ -10,7 +10,7 @@ import UIKit
 
 class HeaderViewController: UIViewController {
     
-    var studentsList: [StudentLocation] = []
+    var studentsList: [StudentsLocations] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,7 +29,7 @@ class HeaderViewController: UIViewController {
     }
     
     @objc private func refresh(_ sender: Any){
-        Client.shared.getStudentsLocations { (result, error) in
+        ParseAPI.shared.getStudentsLocations { (result, error) in
             guard let result = result else {
                 return
             }
