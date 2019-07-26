@@ -16,7 +16,7 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var signupButton: UIButton!
     @IBOutlet weak var activityView: UIActivityIndicatorView!
     
-    
+    let device = UIDevice.current
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,19 +25,20 @@ class LoginViewController: UIViewController {
         emailTextField.borderStyle = .roundedRect
         passwordTextField.borderStyle = .roundedRect
         loginButton.layer.cornerRadius = 5
-        subscribeToNotification(UIResponder.keyboardWillShowNotification, selector: #selector(keyboardWillShow))
-        subscribeToNotification(UIResponder.keyboardWillHideNotification, selector: #selector(keyboardWillHide))
+        subscribeToNotification()
         activityView.stopAnimating()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        device.beginGeneratingDeviceOrientationNotifications()
+        subscribeToNotification()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        device.endGeneratingDeviceOrientationNotifications()
         unsubscribeFromAllNotifications()
-    }
-    
-    @objc private func addLocation(_ sender: Any){
-        let navController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "AddLocationNavigationController") as! UINavigationController
-        present(navController, animated: true, completion: nil)
     }
     
     
@@ -77,7 +78,7 @@ class LoginViewController: UIViewController {
     
     private func completeLogin() {
         
-        let controller = storyboard!.instantiateViewController(withIdentifier: "StudentTabController")
+        let controller = storyboard!.instantiateViewController(withIdentifier: "TabBarController")
         present(controller, animated: true, completion: nil)
         self.activityView.stopAnimating()
     }
@@ -127,12 +128,14 @@ extension LoginViewController: UITextFieldDelegate {
     
 private extension LoginViewController {
     
-    func subscribeToNotification(_ notification: NSNotification.Name, selector: Selector) {
-        NotificationCenter.default.addObserver(self, selector: selector, name: notification, object: nil)
+    func subscribeToNotification() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification , object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     func unsubscribeFromAllNotifications() {
-        NotificationCenter.default.removeObserver(self)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
     }
 }
 

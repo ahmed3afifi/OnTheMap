@@ -12,79 +12,97 @@ import MapKit
 class mapsLocationViewController: UIViewController, MKMapViewDelegate {
     
     @IBOutlet weak var mapView: MKMapView!
-    static let shared = mapsLocationViewController()
-    var location: StudentsLocations?
-    var selectedLocation = CLLocationCoordinate2D(latitude: 0, longitude: 0)
-    var locationTitle = ""
-    var url = ""
     
-    var mapString: String?
-    var mediaURL: String?
-    var latitude: Double?
-    var longitude: Double?
+    let userLat = ParseAPI.sharedInstance().latitude
+    let userLon = ParseAPI.sharedInstance().longitude
+    let userlocationString = ParseAPI.sharedInstance().locationString
     
     override func viewDidLoad() {
         super.viewDidLoad()
         mapView.delegate = self
-        let cancel = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(self.cancel(_:)))
-        self.navigationItem.leftBarButtonItem = cancel
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        createAnnotation()
-    }
-    
-    func createAnnotation() {
-        let annotation = MKPointAnnotation()
-        annotation.title = mapString
-        annotation.subtitle = mediaURL
-        annotation.coordinate = CLLocationCoordinate2DMake(latitude ?? 0.0, longitude ?? 0.0)
-        self.mapView.addAnnotation(annotation)
         
-        //zooming to location
-        let coredinate:CLLocationCoordinate2D = CLLocationCoordinate2DMake(latitude ?? 0.0, longitude ?? 0.0)
-        let span = MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1)
-        let region = MKCoordinateRegion(center: coredinate, span: span)
+        let lat = CLLocationDegrees(userLat!)
+        let long = CLLocationDegrees(userLon!)
+        
+        let coordinate = CLLocationCoordinate2D(latitude: lat, longitude: long)
+        
+        
+        let annotation = MKPointAnnotation()
+        annotation.coordinate = coordinate
+        annotation.title = userlocationString
+        
+        
+        let mapSpan = MKCoordinateSpan.init(latitudeDelta: 0.02, longitudeDelta: 0.02)
+        let region = MKCoordinateRegion(center: coordinate, span: mapSpan)
         self.mapView.setRegion(region, animated: true)
+        
+        
+        
+        self.mapView.addAnnotation(annotation)
+        self.mapView.selectAnnotation(annotation, animated: true)
+        
+    }
+
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        
+        let reuseID = "pin"
+        
+        var pinView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseID) as? MKPinAnnotationView
+        
+        if pinView == nil {
+            pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseID)
+            pinView!.canShowCallout = true
+            pinView!.pinTintColor = UIColor.red
+            
+        } else {
+            pinView!.annotation = annotation
+        }
+        
+        return pinView
     }
     
-    @objc private func cancel(_ sender: Any){
+    
+    @IBAction func backButtonPressed(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
     }
     
-    @IBAction func finishTapped(_ sender: Any) {
-        ParseAPI.shared.getUser { (success, student, errorMessage) in
-            if success {
-                print("student?.uniqueKey: \(String(describing: student?.uniqueKey))")
-                DispatchQueue.main.async {
-                    self.sendInformation(student!)
-                }
-            } else {
-                DispatchQueue.main.async {
-                    print(errorMessage!)
-                }
-            }
-        }
-    }
     
-    func sendInformation(_ student: StudentsLocations){
-        var newStudent = StudentsLocations()
-        newStudent.uniqueKey = student.uniqueKey
-        newStudent.firstName = student.firstName
-        newStudent.lastName = student.lastName
-        newStudent.mapString = student.mapString
-        newStudent.mediaURL = student.mediaURL
-        newStudent.longitude = student.longitude
-        newStudent.latitude = student.latitude
-        ParseAPI.shared.postStudent(newStudent) { (success, errorMessage) in
-            if success {
-                DispatchQueue.main.async {
-                    self.navigationController?.popToRootViewController(animated: true)
+    @IBAction func finishTapped(_ sender: Any) {
+        
+        if let id = ParseAPI.sharedInstance().objectID  {
+            ParseAPI.sharedInstance().updateStudentInfo(objectID: id, { (success, error) in
+                if error != nil {
+                    DispatchQueue.main.async {
+                        let alert = UIAlertController(title: "UPDATE ERROR", message: error, preferredStyle: .alert)
+                        alert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
+                        self.present(alert, animated: true)
+                    }
                 }
-            } else {
-                DispatchQueue.main.async {
-                    print(errorMessage!)
+                if success == true {
+                    DispatchQueue.main.async {
+                        self.presentingViewController?.presentingViewController?.dismiss(animated: true, completion: nil)
+                    }
+                }
+            })
+        } else {
+            ParseAPI.sharedInstance().postStudentLocation { (success, error) in
+                if error != nil {
+                    DispatchQueue.main.async {
+                        let alert = UIAlertController(title: "POSTING ERROR", message: error, preferredStyle: .alert)
+                        alert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
+                        self.present(alert, animated: true)
+                    }
+                }
+                if success == true {
+                    
+                    DispatchQueue.main.async {
+                        self.presentingViewController?.presentingViewController?.dismiss(animated: true, completion: nil)
+                    }
+                    
                 }
             }
         }

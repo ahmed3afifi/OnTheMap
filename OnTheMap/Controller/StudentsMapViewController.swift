@@ -11,7 +11,7 @@ import MapKit
 import SafariServices
 
 
-class StudentsMapViewController: HeaderViewController {
+class StudentsMapViewController: UIViewController, MKMapViewDelegate {
     
     @IBOutlet weak var mapView: MKMapView!
     
@@ -22,53 +22,101 @@ class StudentsMapViewController: HeaderViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         
-        ParseAPI.shared.getStudentsLocations(){(result, error) in
-            DispatchQueue.main.async {
+        let activityIndicator = UIViewController.ActivityIndicator(onView: self.mapView)
+        ParseAPI.sharedInstance().getStudentsLocations { (results, error) in
                 if error != nil {
-                    let alert = UIAlertController(title: "Fail", message: "sorry, we could not fetch data", preferredStyle: .alert)
-                    alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-                    print("error")
-                    return
+                    DispatchQueue.main.async {
+                    let alert = UIAlertController(title: "DOWNLOAD ERROR", message: error, preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
+                    self.present(alert, animated: true)
+                    UIViewController.deactivateSpinner(spinner: activityIndicator)
                 }
+            }
                 
-                guard result != nil else {
-                    let alert = UIAlertController(title: "Fail", message: "sorry, we could not fetch data", preferredStyle: .alert)
-                    alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-                    return
-                }
+            if let locations = results {
+                var annotations = [MKPointAnnotation]()
                 
-                StudentsLocations.lastFetched = result
-                var map = [MKPointAnnotation]()
-                
-                for location in result! {
-                    let long = CLLocationDegrees(location.longitude ?? 0.0)
-                    let lat = CLLocationDegrees(location.latitude ?? 0.0)
-                    let cords = CLLocationCoordinate2D(latitude: lat, longitude: long)
-                    let mediaURL = location.mediaURL ?? " "
-                    let firstName = location.firstName ?? " "
-                    let lastName = location.lastName ?? " "
+                for dictionary in locations {
+                    
+                    let lat = CLLocationDegrees(dictionary.latitude!)
+                    let long = CLLocationDegrees(dictionary.longitude!)
+                    
+                    let coordinate = CLLocationCoordinate2D(latitude: lat, longitude: long)
+                    
+                    let first = dictionary.firstName!
+                    let last = dictionary.lastName!
+                    let mediaURL = dictionary.mediaURL!
+                    
                     
                     let annotation = MKPointAnnotation()
-                    annotation.coordinate = cords
-                    annotation.title = "\(firstName) \(lastName)"
+                    annotation.coordinate = coordinate
+                    annotation.title = "\(first) \(last)"
                     annotation.subtitle = mediaURL
-                    map.append(annotation)
+                    
+                    annotations.append(annotation)
                 }
-                self.mapView.addAnnotations(map)
+                
+                DispatchQueue.main.async {
+                    self.mapView.addAnnotations(annotations)
+                    UIViewController.deactivateSpinner(spinner: activityIndicator)
+                }
+                
+            } else {
+                print(error!)
+            }
+       }
+   }
+
+    @IBAction func logout(_ sender: Any) {
+        
+        UdacityAPI.sharedInstance().logout { (success, error) in
+            if error != nil {
+                print("logout error")
+            } else {
+                
+                DispatchQueue.main.async {
+                    self.dismiss(animated: true, completion: nil)
+                }
             }
         }
-    }
-}
 
-extension StudentsMapViewController: MKMapViewDelegate {
+    }
+    
+    @IBAction func refresh(_ sender: Any) {
+        self.viewWillAppear(true)
+    }
+    
+    
+    @IBAction func AddLocationPressed(_ sender: Any) {
+        
+        ParseAPI.sharedInstance().checkForObjectId(UdacityAPI.Constants.studentKey) { (success) in
+            
+            if !success {
+                let controller = self.storyboard!.instantiateViewController(withIdentifier: "addLocationViewController") as UIViewController
+                self.present(controller, animated: true, completion: nil)
+            } else {
+                let alert = UIAlertController(title: nil, message: "User \(UdacityAPI.Constants.firstName) \(UdacityAPI.Constants.lastName) has already posted a Student Location. Would you like to overwrite their location?", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "Overwrite", style: .default, handler: { action in
+                    print("overwrite pressed")
+                    let controller = self.storyboard!.instantiateViewController(withIdentifier: "addLocationViewController") as UIViewController
+                    self.present(controller, animated: true, completion: nil)
+                }))
+                alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
+                self.present(alert, animated: true)
+            }
+        }
+        
+    }
+    
+    
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        let reuseid = "pin"
-        var pinView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseid) as? MKPinAnnotationView
+        let reuseID = "pin"
+        var pinView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseID) as? MKPinAnnotationView
         if pinView == nil {
-            pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseid)
+            pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseID)
             pinView!.canShowCallout = true
-            pinView!.pinTintColor = .red
+            pinView!.pinTintColor = #colorLiteral(red: 0.7450980544, green: 0.1568627506, blue: 0.07450980693, alpha: 1)
             pinView!.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
         } else {
             pinView!.annotation = annotation
@@ -79,32 +127,27 @@ extension StudentsMapViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         if control == view.rightCalloutAccessoryView {
             
-            if let toOpen = view.annotation?.subtitle! {
-                guard let url = URL(string: toOpen) else {return}
-                openUrlInSafari(url:url)
-            }
-        }
-    }
-    
-    func mapView(mapView: MKMapView, annotationView: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
-        if control == annotationView.rightCalloutAccessoryView {
-            guard let newUrl = annotationView.annotation?.subtitle else {return}
-            guard let stringUrl = newUrl else {return}
-            guard let url = URL(string: stringUrl) else {return}
-            openUrlInSafari(url:url)
-        }
-    }
-    
-    func openUrlInSafari(url:URL){
-        if url.absoluteString.contains("http://"){
-            let svc = SFSafariViewController(url: url)
-            present(svc, animated: true, completion: nil)
-        }else {
-            DispatchQueue.main.async {
-                print("could not open url")
+            if let studentURLstring = view.annotation?.subtitle!, let studentURL = URL(string: studentURLstring) {
+                if UIApplication.shared.canOpenURL(studentURL) {
+                    UIApplication.shared.open(studentURL, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]), completionHandler: nil)
+                } else {
+                    let alert = UIAlertController(title: "URL Won't Open", message: "This URL is Not Valid and Won't Open", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
+                    self.present(alert, animated: true, completion: nil)
+                    
+                }
+            } else {
+                let alert = UIAlertController(title: "URL not valid", message: "Student's provided URL information contains illegal characters or spaces and will not open.", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
             }
         }
     }
 
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToUIApplicationOpenExternalURLOptionsKeyDictionary(_ input: [String: Any]) -> [UIApplication.OpenExternalURLOptionsKey: Any] {
+    return Dictionary(uniqueKeysWithValues: input.map { key, value in (UIApplication.OpenExternalURLOptionsKey(rawValue: key), value)})
 }
 

@@ -15,9 +15,8 @@ class addLocationViewController: UIViewController {
     @IBOutlet weak var locationName: UITextField!
     @IBOutlet weak var mediaURL: UITextField!
     @IBOutlet weak var findLocationButton: UIButton!
-    //var newLocation = StudentsLocations()
-    var latitude: Double?
-    var longitude: Double?
+    
+    let device = UIDevice.current
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,6 +25,11 @@ class addLocationViewController: UIViewController {
         locationName.borderStyle = .roundedRect
         mediaURL.borderStyle = .roundedRect
         findLocationButton.layer.cornerRadius = 5
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        device.beginGeneratingDeviceOrientationNotifications()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -38,52 +42,48 @@ class addLocationViewController: UIViewController {
         self.dismiss(animated: true, completion: nil)
     }
     
-    
     @IBAction func findLocationButton(_ sender: Any) {
         
-        if locationName.text != "" && mediaURL.text != "" {
-            ActivityIndicator.startActivityIndicator(view: self.view )
-            let searchRequest = MKLocalSearch.Request()
-            searchRequest.naturalLanguageQuery = locationName.text
+        if locationName.text!.isEmpty || mediaURL.text!.isEmpty {
+            let alert = UIAlertController(title: nil, message: "Location & URL are required!", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            self.present(alert, animated: true)
             
-            let activeSearch = MKLocalSearch(request: searchRequest)
             
-            activeSearch.start { (response, error) in
-                DispatchQueue.main.async {
-                    
-                    if error != nil {
-                        ActivityIndicator.stopActivityIndicator()
-                        print("Location Error : \(error!.localizedDescription)")
-                    }else {
-                        ActivityIndicator.stopActivityIndicator()
-                        self.latitude = response?.boundingRegion.center.latitude
-                        self.longitude = response?.boundingRegion.center.longitude
-                        self.performSegue(withIdentifier: "showLocation", sender: nil)
-                        //let controller = self.storyboard!.instantiateViewController(withIdentifier: "mapsLocation")
-                        //self.present(controller, animated: true, completion: nil)
+        } else {
+            let userLocation = locationName.text!
+            let userURL = mediaURL.text!
+            let activityView = UIViewController.ActivityIndicator(onView: self.view)
+            
+            ParseAPI.sharedInstance().findStudentLocation(location: userLocation, userURL: userURL, completion: { (success, error) in
+                if error != nil {
+                    DispatchQueue.main.async {
+                        let alert = UIAlertController(title: "Could Not Find Location", message: error, preferredStyle: .alert)
+                        alert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
+                        self.present(alert, animated: true)
+                        UIViewController.deactivateSpinner(spinner: activityView)
                     }
                 }
-            }
-        } else {
-            DispatchQueue.main.async {
                 
-                print("error")
-            }
+                if success == true {
+                    DispatchQueue.main.async {
+                        
+                        let controller = self.storyboard!.instantiateViewController(withIdentifier: "mapsLocationViewController")
+                        self.present(controller, animated: true, completion: nil)
+                        UIViewController.deactivateSpinner(spinner: activityView)
+        
+                    }
+                } else {
+                    DispatchQueue.main.async {
+                        let alert = UIAlertController(title: "Invalid URL", message: error, preferredStyle: .alert)
+                        alert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
+                        self.present(alert, animated: true)
+                        UIViewController.deactivateSpinner(spinner: activityView)
+                    }
+                }
+            })
         }
     }
-    
-    
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "showLocation" {
-            let vc = segue.destination as! mapsLocationViewController
-            vc.mapString = locationName.text!
-            vc.mediaURL = mediaURL.text!
-            vc.latitude = self.latitude
-            vc.longitude = self.longitude
-        }
-    }
-    
 }
 
 extension addLocationViewController: UITextFieldDelegate {

@@ -11,31 +11,33 @@ import UIKit
 
 class StudentsTableViewController: UITableViewController {
     
-    @IBOutlet weak var studentsTableview: UITableView!
+    
+    @IBOutlet weak var studentsTableView: UITableView!
     var students: [StudentsLocations]!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        studentsTableview.delegate = self
+        studentsTableView.delegate = self
+        studentsTableView.dataSource = self
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.students = StudentsData.sharedInstance().students
-        
+        refresh()
     }
-    
     
     
     @IBAction func addLocationPressed(_ sender: Any) {
         ParseAPI.sharedInstance().checkForObjectId(UdacityAPI.Constants.studentKey) { (success) in
             if !success {
-        let mapVC = self.storyboard!.instantiateViewController(withIdentifier: "PostLocationViewController") as UIViewController
+        let mapVC = self.storyboard!.instantiateViewController(withIdentifier: "addLocationViewController") as UIViewController
         self.present(mapVC, animated: true, completion: nil)
             } else {
                 let alert = UIAlertController(title: nil, message: "User \(UdacityAPI.Constants.firstName) \(UdacityAPI.Constants.lastName) has already posted a Student Location. Would you like to overwrite their location?", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "Overwrite", style: .default, handler: { action in
-                    let controller = self.storyboard!.instantiateViewController(withIdentifier: "PostLocationViewController") as UIViewController
+                    let controller = self.storyboard!.instantiateViewController(withIdentifier: "addLocationViewController") as UIViewController
                     self.present(controller, animated: true, completion: nil)
                 }))
                 alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
@@ -45,7 +47,7 @@ class StudentsTableViewController: UITableViewController {
         
     }
     
-    @IBAction func refresh(_ sender: Any) {
+    @IBAction func refresh() {
         let activityIndicator = UIViewController.ActivityIndicator(onView: self.tableView)
         ParseAPI.sharedInstance().getStudentsLocations { (results, error) in
             if error != nil {
@@ -62,7 +64,7 @@ class StudentsTableViewController: UITableViewController {
                 
                 DispatchQueue.main.async {
                     UIViewController.deactivateSpinner(spinner: activityIndicator)
-                    self.studentsTableview.reloadData()
+                    self.studentsTableView.reloadData()
                 }
             }
         }
@@ -80,9 +82,7 @@ class StudentsTableViewController: UITableViewController {
         }
     }
     
-}
-    
-extension StudentsTableViewController {
+
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return students.count
@@ -102,7 +102,7 @@ extension StudentsTableViewController {
         
         // NAME
         if let firstName = student.firstName, firstName != "" {
-            if let lastName = student.lastName, lastName != "" {
+        if let lastName = student.lastName, lastName != "" {
                 cell?.textLabel!.text = "\(firstName) \(lastName)"
             } else {
                 cell?.textLabel!.text = firstName
@@ -143,4 +143,5 @@ extension StudentsTableViewController {
         return Dictionary(uniqueKeysWithValues: input.map { key, value in (UIApplication.OpenExternalURLOptionsKey(rawValue: key), value)})
     }
 }
+
 
