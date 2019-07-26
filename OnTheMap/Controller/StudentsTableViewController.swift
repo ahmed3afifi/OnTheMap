@@ -35,7 +35,7 @@ class StudentsTableViewController: UITableViewController {
         let mapVC = self.storyboard!.instantiateViewController(withIdentifier: "addLocationViewController") as UIViewController
         self.present(mapVC, animated: true, completion: nil)
             } else {
-                let alert = UIAlertController(title: nil, message: "User \(UdacityAPI.Constants.firstName) \(UdacityAPI.Constants.lastName) has already posted a Student Location. Would you like to overwrite their location?", preferredStyle: .alert)
+                let alert = UIAlertController(title: nil, message: "Another user has already posted a student Location. Would you like to overwrite his location?", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "Overwrite", style: .default, handler: { action in
                     let controller = self.storyboard!.instantiateViewController(withIdentifier: "addLocationViewController") as UIViewController
                     self.present(controller, animated: true, completion: nil)
@@ -81,8 +81,6 @@ class StudentsTableViewController: UITableViewController {
             }
         }
     }
-    
-
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return students.count

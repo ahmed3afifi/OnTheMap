@@ -41,8 +41,8 @@ class LoginViewController: UIViewController {
         unsubscribeFromAllNotifications()
     }
     
-    
-    @IBAction func loginTapped(_ sender: Any) {
+    // MARK: WHEN LOGIN BUTTON PRESSED
+    @IBAction func loginPressed(_ sender: Any) {
         
         if (emailTextField.text?.isEmpty)! || (passwordTextField.text?.isEmpty)!  {
             let alert = UIAlertController(title: "Login Failed", message: "Please fill both email and password", preferredStyle: .alert)
