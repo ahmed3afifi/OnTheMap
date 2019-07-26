@@ -1,5 +1,5 @@
 //
-//  UdacityClient.swift
+//  UdacityAPI.swift
 //  OnTheMap
 //
 //  Created by Ahmed Afifi on 7/25/19.
@@ -13,7 +13,7 @@ class UdacityAPI: NSObject {
     var session = URLSession.shared
     
     // MARK: LOGIN FUNCTION
-    func login(_ email: String,_ password: String, completionHandlerForLogin: @escaping (_ Success: Bool,_ SessionID: String?,_ errorString: String?)-> void) {
+    func login(email: String, password: String, completionHandlerForLogin: @escaping (_ success: Bool, _ sessionID: String?, _ errorString: String?) -> Void) {
         
         var request = URLRequest(url: URL(string: "https://onthemap-api.udacity.com/v1/session")!)
         request.httpMethod = "POST"

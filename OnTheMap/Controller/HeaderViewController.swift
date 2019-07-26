@@ -8,7 +8,7 @@
 
 import UIKit
 
-class HeaderViewController: UIViewController {
+/*class HeaderViewController: UIViewController {
     
     var studentsList: [StudentsLocations] = []
     
@@ -43,4 +43,4 @@ class HeaderViewController: UIViewController {
     @objc private func logout(_ sender: Any){
         self.dismiss(animated: true, completion: nil)
     }
-}
+}*/
