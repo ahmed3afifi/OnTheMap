@@ -95,14 +95,16 @@ class StudentsMapViewController: UIViewController, MKMapViewDelegate {
                 let controller = self.storyboard!.instantiateViewController(withIdentifier: "addLocationViewController") as UIViewController
                 self.present(controller, animated: true, completion: nil)
             } else {
-                let alert = UIAlertController(title: nil, message: "Another user has already posted a student Location. Would you like to overwrite his location?", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "Overwrite", style: .default, handler: { action in
-                    print("overwrite pressed")
-                    let controller = self.storyboard!.instantiateViewController(withIdentifier: "addLocationViewController") as UIViewController
-                    self.present(controller, animated: true, completion: nil)
-                }))
-                alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
-                self.present(alert, animated: true)
+                DispatchQueue.main.sync {
+                    let alert = UIAlertController(title: nil, message: "Another user has already posted a student Location. Would you like to overwrite his location?", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "Overwrite", style: .default, handler: { action in
+                        print("overwrite pressed")
+                        let controller = self.storyboard!.instantiateViewController(withIdentifier: "addLocationViewController") as UIViewController
+                        self.present(controller, animated: true, completion: nil)
+                    }))
+                    alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
+                    self.present(alert, animated: true)
+                }
             }
         }
         

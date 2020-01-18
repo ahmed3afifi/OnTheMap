@@ -176,7 +176,6 @@ class ParseAPI: NSObject {
             guard let statusCode = (response as? HTTPURLResponse)?.statusCode, statusCode >= 200 && statusCode <= 299 else {
                 print("status code returned other than 2xx")
                 completionHandler(false, "Could Not Update Student Information.")
-                
                 return
             }
             

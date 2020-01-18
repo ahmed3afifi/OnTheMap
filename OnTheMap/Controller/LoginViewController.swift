@@ -20,13 +20,19 @@ class LoginViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        //update ui
         emailTextField.delegate = self
         passwordTextField.delegate = self
         emailTextField.borderStyle = .roundedRect
         passwordTextField.borderStyle = .roundedRect
         loginButton.layer.cornerRadius = 5
+        
+        //
         subscribeToNotification()
-        activityView.stopAnimating()
+        
+        //animate
+         activityView.stopAnimating()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -44,36 +50,39 @@ class LoginViewController: UIViewController {
     // MARK: WHEN LOGIN BUTTON PRESSED
     @IBAction func loginPressed(_ sender: Any) {
         
-        if (emailTextField.text?.isEmpty)! || (passwordTextField.text?.isEmpty)!  {
+        //validate email and pass
+        let username: String = emailTextField.text!
+        let password : String = passwordTextField.text!
+        if (username.isEmpty) || (password.isEmpty)  {
             let alert = UIAlertController(title: "Login Failed", message: "Please fill both email and password", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: {_ in
                 self.present(alert, animated: true, completion: nil)
                 return
             }))
-        } else {
-            activityView.startAnimating()
-            let username = emailTextField.text!
-            let password = passwordTextField.text!
-            
-            UdacityAPI.sharedInstance().login(email: username, password: password, completionHandlerForLogin: { (success, sessionID, error) in
-                if success {
-                    UdacityAPI.sharedInstance().getUser()
-                    DispatchQueue.main.async {
-                        self.completeLogin()
-                    }
-                } else {
-                    DispatchQueue.main.async {
-                        self.activityView.stopAnimating()
-                        let alert = UIAlertController(title: "Login Failed", message: error, preferredStyle: .alert)
-                        alert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
-                        self.present(alert, animated: true)
-                    }
-                    
-                }
-            })
-            
-            
+            return
         }
+        
+        //progress
+        activityView.startAnimating()
+   
+        
+        UdacityAPI.sharedInstance().login(email: username, password: password, completionHandlerForLogin: { (success, sessionID, error) in
+            if success {
+                UdacityAPI.sharedInstance().getUser()
+                DispatchQueue.main.async {
+                    self.completeLogin()
+                }
+            } else {
+                DispatchQueue.main.async {
+                    self.activityView.stopAnimating()
+                    let alert = UIAlertController(title: "Login Failed", message: error, preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
+                    self.present(alert, animated: true)
+                }
+                
+            }
+        })
+        
     }
     
     private func completeLogin() {
