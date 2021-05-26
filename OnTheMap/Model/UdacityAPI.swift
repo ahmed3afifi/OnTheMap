@@ -10,6 +10,13 @@ import UIKit
 
 class UdacityAPI: NSObject {
     
+    class func sharedInstance() -> UdacityAPI {
+        struct Singleton {
+            static var sharedInstance = UdacityAPI()
+        }
+        return Singleton.sharedInstance
+    }
+    
     var session = URLSession.shared
     
     // MARK: LOGIN FUNCTION
@@ -21,7 +28,6 @@ class UdacityAPI: NSObject {
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.httpBody = "{\"udacity\": {\"username\": \"\(email)\", \"password\": \"\(password)\"}}".data(using: .utf8)
         
-        let session = URLSession.shared
         let task = session.dataTask(with: request as URLRequest) { data, response, error in
     
             if error != nil { // Handle error…
@@ -139,15 +145,7 @@ class UdacityAPI: NSObject {
         }
         task.resume()
     }
-    
-    class func sharedInstance() -> UdacityAPI {
-        struct Singleton {
-            static var sharedInstance = UdacityAPI()
-        }
-        return Singleton.sharedInstance
-    }
 
-    
     override init() {
         super.init()
     }

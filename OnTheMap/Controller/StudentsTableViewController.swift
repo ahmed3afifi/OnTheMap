@@ -31,18 +31,21 @@ class StudentsTableViewController: UITableViewController {
     
     @IBAction func addLocationPressed(_ sender: Any) {
         ParseAPI.sharedInstance().checkForObjectId(UdacityAPI.Constants.studentKey) { (success) in
-            if !success {
-        let mapVC = self.storyboard!.instantiateViewController(withIdentifier: "addLocationViewController") as UIViewController
-        self.present(mapVC, animated: true, completion: nil)
-            } else {
-                let alert = UIAlertController(title: nil, message: "Another user has already posted a student Location. Would you like to overwrite his location?", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "Overwrite", style: .default, handler: { action in
-                    let controller = self.storyboard!.instantiateViewController(withIdentifier: "addLocationViewController") as UIViewController
-                    self.present(controller, animated: true, completion: nil)
-                }))
-                alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
-                self.present(alert, animated: true)
+            DispatchQueue.main.async {
+                if !success {
+                let mapVC = self.storyboard!.instantiateViewController(withIdentifier: "addLocationViewController") as UIViewController
+                self.present(mapVC, animated: true, completion: nil)
+                    } else {
+                        let alert = UIAlertController(title: nil, message: "Another user has already posted a student Location. Would you like to overwrite his location?", preferredStyle: .alert)
+                        alert.addAction(UIAlertAction(title: "Overwrite", style: .default, handler: { action in
+                            let controller = self.storyboard!.instantiateViewController(withIdentifier: "addLocationViewController") as UIViewController
+                            self.present(controller, animated: true, completion: nil)
+                        }))
+                        alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
+                        self.present(alert, animated: true)
+                    }
             }
+            
         }
         
     }

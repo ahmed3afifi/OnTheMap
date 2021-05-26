@@ -129,7 +129,7 @@ private extension addLocationViewController {
 
 extension UIViewController {
     func startAnActivityIndicator() -> UIActivityIndicatorView {
-        let ai = UIActivityIndicatorView(style: .gray)
+        let ai = UIActivityIndicatorView(style: .medium)
         self.view.addSubview(ai)
         self.view.bringSubviewToFront(ai)
         ai.center = self.view.center

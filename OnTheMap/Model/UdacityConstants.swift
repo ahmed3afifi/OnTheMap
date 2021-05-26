@@ -11,6 +11,7 @@ import Foundation
 extension UdacityAPI {
     
     struct Constants {
+        
         static var studentKey: String = ""
         static var firstName: String = ""
         static var lastName: String = ""

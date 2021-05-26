@@ -30,21 +30,30 @@ class LoginViewController: UIViewController {
         
         //
         subscribeToNotification()
+        emailTextField.text?.removeAll()
+        passwordTextField.text?.removeAll()
+        print("Login View Did Load")
         
         //animate
          activityView.stopAnimating()
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         device.beginGeneratingDeviceOrientationNotifications()
         subscribeToNotification()
+        print("Login View will appear")
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         device.endGeneratingDeviceOrientationNotifications()
         unsubscribeFromAllNotifications()
+        print("Login View will disappear")
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        print("Login View Did appear")
     }
     
     // MARK: WHEN LOGIN BUTTON PRESSED
